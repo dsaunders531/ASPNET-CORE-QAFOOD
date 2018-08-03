@@ -1,0 +1,21 @@
+﻿@model IViewModel
+
+@{
+    Model.PageMeta.PageTitle = "About";
+    Model.PageMeta.Description = "About us";
+    Model.PageMeta.AddKeyword("About");
+}
+
+<h2>@Model.PageMeta.Description</h2>
+<h3>@ViewData["Message"]</h3>
+
+<ul class="list-group">
+    <li class="list-group-item list-group-item-heading">This site uses these technology providers and services.</li>
+    <li class="list-group-item"><i class="fa fa-html5">&nbsp; </i><a href="https://www.w3.org/standards/webdesign/htmlcss">HTML5</a></li>
+    <li class="list-group-item"><img src="~/images/MS_Corporate.png" style="height:23px; width: 108px;" /> <a href="https://www.microsoft.com/en-gb/">Microsoft ASP.Net Core</a></li>
+    <li class="list-group-item"><i class="fa fa-font-awesome">&nbsp; </i><a href="https://fontawesome.com/">Font Awesome</a></li>
+    <li class="list-group-item"><img src="~/images/Boostrap_logo.svg" style="height:14px; width: 14px;" /> <a href="https://getbootstrap.com/">Bootstrap</a></li>
+    <li class="list-group-item"><img src="~/images/jquery-mark-light.gif" style="height: 21px; width: 80px" /> <a href="https://jquery.com/">jQuery</a></li>
+    <li class="list-group-item list-group-item-info">This site is not affiliated to any of the above.</li>
+</ul>
+

@@ -1,0 +1,31 @@
+﻿/*
+    Site Style.
+
+    This is not a complete solution - you will need to make changes for different brand images.
+
+*/
+
+// Colour parameters
+$body-background: whitesmoke;
+$body-font-color: black;
+
+$header-background: lightskyblue;
+$header-font-color: $body-font-color;
+
+$footer-background: $header-background;
+$footer-font-color: $body-font-color;
+
+$nav-background: dimgrey;
+$nav-font-color: white;
+
+$nav-selected-background: dimgrey;
+$nav-selected-font-color: $nav-font-color;
+
+$nav-selected-background-desktop: $body-background;
+$nav-selected-font-color-desktop: $body-font-color;
+
+$nav-toggle-selected: $nav-selected-background;
+
+$dialog-backgound: whitesmoke;
+$dialog-font-color: $body-font-color;
+// End of parameters

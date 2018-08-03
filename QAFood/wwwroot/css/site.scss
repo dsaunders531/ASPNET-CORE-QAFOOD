@@ -1,0 +1,309 @@
+﻿/*
+    Site Style.
+
+    This is not a complete solution - you will need to make changes for different brand images.
+
+*/
+@import '_functions.scss';
+@import '_theme.scss';
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    background-color: $body-background;
+    color: $body-font-color;
+    cursor: default;
+}
+
+header {
+    max-height: 0px;
+    visibility: hidden;
+}
+
+// The inital configuration is for the smallest size where the nav is the header.
+nav, .navbar-custom, .navbar-toggle {
+    background-color: $header-background;
+    color: $header-font-color;
+}
+
+.navbar {
+    color: $header-font-color;
+    @include border-radius(0px);
+    border: none;
+}
+
+nav .icon-bar {
+    background-color: $header-font-color;
+}
+
+nav .navbar-header h1, nav .navbar-header img {
+    float: left;
+}
+
+nav .navbar-header h1 {
+    margin-top: 14px;
+    font-size: 20px;
+}
+
+nav .navbar-header img {
+    margin-top: 8px;
+    margin-left: 8px;
+    padding-right: 8px;
+    height: 30px;
+    width: 47px;
+}
+
+.dropdown-menu .divider {
+    background-color: $nav-selected-background;
+}
+
+.navbar-custom .navbar-text {
+    color: $header-font-color;
+}
+
+.navbar-custom .navbar-nav > li > a,
+.navbar-custom .navbar-nav > li > .fa,
+.navbar-custom .navbar-nav .dropdown-menu > li > a,
+.navbar-custom .navbar-nav .dropdown-menu > li > .fa {
+    color: $header-font-color;
+    background-color: $header-background;
+}
+
+.navbar-custom .navbar-nav > li > a:hover,
+.navbar-custom .navbar-nav > li > a:focus,
+.navbar-custom .navbar-nav > li > .fa:hover,
+.navbar-custom .navbar-nav > li > .fa:focus,
+.navbar-custom .navbar-nav .dropdown-menu > li > a:hover,
+.navbar-custom .navbar-nav .dropdown-menu > li > a:focus,
+.navbar-custom .navbar-nav .dropdown-menu > li > .fa:hover,
+.navbar-custom .navbar-nav .dropdown-menu > li > .fa:focus {
+    color: $nav-selected-font-color;
+    background-color: $nav-selected-background;
+}
+
+.navbar-custom .navbar-nav > .active > a,
+.navbar-custom .navbar-nav > .active > a:hover,
+.navbar-custom .navbar-nav > .active > a:focus,
+.navbar-custom .navbar-nav > .active > .fa:hover,
+.navbar-custom .navbar-nav > .active > .fa:focus {
+    color: $nav-selected-font-color;
+    background-color: $nav-selected-background;
+}
+
+.navbar-custom .navbar-toggle:hover,
+.navbar-custom .navbar-toggle:focus {
+    color: $nav-selected-font-color;
+    background-color: $nav-toggle-selected;
+}
+
+content .container {
+    margin-top: -12px;
+    margin-bottom: 120px;
+}
+
+.footer {
+    min-height: 65px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: $footer-background;
+    color: $footer-font-color;
+}
+
+footer .row {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+footer ul {
+    padding-left: 14px;
+    padding-right: 14px;
+}
+
+footer li {
+    list-style-type: none;
+}
+
+footer a {
+    color: $body-font-color;
+}
+
+footer a:hover {
+    text-decoration: wavy;
+    font-weight: bold;
+    color: $body-font-color;
+}
+
+footer a:visited {
+    font-weight: bold;
+    color: $body-font-color;
+}
+
+footer ul span {
+    visibility: hidden;
+    max-height: 0px;
+    max-width: 0px;
+}
+
+div .modal-dialog, div .modal-lg {
+    background-color: $dialog-backgound;
+    color: $dialog-font-color;
+}
+
+div .btn-group {
+    margin-left: 15px;
+    padding: 20px;
+    font-size: larger;
+    float: right;
+}
+
+// Extra small devices (portrait phones, less than 576px)
+// No media query since this is the default in Bootstrap
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+
+    nav .navbar-header h1 {
+        margin-top: 12px;
+        font-size: 24px;
+    }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+
+    .header {
+        visibility: initial;
+        max-height: initial;
+        background-color: $header-background;
+        color: $header-font-color;
+    }
+
+    header h1 {
+        float: right;
+        font-size: 30px;
+    }
+
+    header img {
+        height: 60px;
+        width: 94px;
+        margin-top: 8px;
+        margin-bottom: 12px;
+    }
+
+    nav .navbar-header h1, nav .navbar-header img {
+        visibility: hidden;
+        max-height: 0px;
+        max-width: 0px;
+        padding: 0px;
+        margin: 0px;
+    }
+
+    nav .container {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    nav .active {
+        background-color: $nav-selected-background-desktop;
+    }
+
+    // nav for desktop
+    .dropdown-menu {
+        border: none;
+        @include border-radius(0px);
+    }
+
+    nav, .navbar-custom, .navbar-toggle, .dropdown-menu {
+        background-color: $nav-background;
+        color: $nav-font-color;
+    }
+
+    .navbar {
+        color: $nav-background;        
+    }
+
+    nav .icon-bar {
+        background-color: $nav-font-color;
+    }
+
+    .dropdown-menu .divider {
+        background-color: $nav-selected-background-desktop;
+    }
+
+    .navbar-custom .navbar-text {
+        color: $nav-font-color;
+    }
+
+    .navbar-custom .navbar-nav > li > a,
+    .navbar-custom .navbar-nav > li > .fa,
+    .navbar-custom .navbar-nav .dropdown-menu > li > a,
+    .navbar-custom .navbar-nav .dropdown-menu > li > .fa {
+        color: $nav-font-color;
+        background-color: $nav-background;
+    }
+
+    .navbar-custom .navbar-nav > li > a:hover,
+    .navbar-custom .navbar-nav > li > a:focus,
+    .navbar-custom .navbar-nav > li > .fa:hover,
+    .navbar-custom .navbar-nav > li > .fa:focus,
+    .navbar-custom .navbar-nav .dropdown-menu > li > a:hover,
+    .navbar-custom .navbar-nav .dropdown-menu > li > a:focus,
+    .navbar-custom .navbar-nav .dropdown-menu > li > .fa:hover,
+    .navbar-custom .navbar-nav .dropdown-menu > li > .fa:focus {
+        color: $nav-selected-font-color-desktop;
+        background-color: $nav-selected-background-desktop;
+    }
+
+    .navbar-custom .navbar-nav > .active > a,
+    .navbar-custom .navbar-nav > .active > a:hover,
+    .navbar-custom .navbar-nav > .active > a:focus,
+    .navbar-custom .navbar-nav > .active > .fa:hover,
+    .navbar-custom .navbar-nav > .active > .fa:focus {
+        color: $nav-selected-font-color-desktop;
+        background-color: $nav-selected-background-desktop;
+    }
+
+    content .container {
+        margin-bottom: 55px;
+    }
+
+    .footer {
+        min-height: 40px;
+    }
+
+    footer li {
+        display: inline;
+    }
+
+    footer ul span {
+        visibility: initial;
+        max-height: initial;
+        max-width: initial;
+    }
+
+    .navbar-fixed-top {
+        padding-left: 30px;
+        padding-right: initial;
+    }
+
+    div .btn-group {
+        float: initial;
+    }
+
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+
+}
+
+@import '_fixes.scss';

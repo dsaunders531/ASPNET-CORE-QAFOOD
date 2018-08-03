@@ -1,0 +1,48 @@
+Prerequites:
+
+Visual Studio 2017 15.7.4 (community version is OK)
+	These workloads will need adding: 
+		- ASP.Net and web development
+		- .Net Core cross-platform development
+
+These extensions will be useful (Tools->Extensions and updates)
+	- Bundler and Minifier
+	- CompileSass
+
+ASP.Net Core SDK 2.1.302
+	https://www.microsoft.com/net/download
+	https://www.microsoft.com/net/download/thank-you/dotnet-sdk-2.1.302-windows-x64-installer
+
+The version is important. There have been some changes since earlier versions and the site will not work with earlier versions.
+
+There are 2 projects 'QAFoods', 'mezzanine.essentials'.
+The main project is QAFoods, the other project is a library with labour saving features.
+
+Configure the connection strings:
+	The web application will throw errors if the connection strings are not configured.
+	The application targets SQL Server. A local copy of SQLExpress will also work.
+	
+	Open the solution QAFood.sln.
+		The first time you open the solution lots of things will be downloaded from NuGet.
+
+	Open the file QAFood\appsettings.json
+		Add connection string details for Content and Authentication:
+		The database details for both of these can point to the same database.
+		
+		A value like this should be fine for SQL Server or SQL Server Express: Server=[server]\\[instance];Database=[database name];Trusted_Connection=true;MultipleActiveResultSets=true
+	
+	Do not change any other part of the file or its structure!
+
+	Copy the entire contents of appsettings.json to appsettings.Development.json. This file is nested under appsettings.json.
+
+Create the database:
+	There are 2 ways to create the database.
+	1 - Run the application - it is configured to automatically create and update the database.
+
+	2 - View -> Other Windows -> Package manager console.
+		Type 'Update-Database -Context AuthenticationDbContext' at the prompt
+		After a while...
+		Type 'Update-Database -Context ApplicationDbContext' at the prompt
+	
+
+Run the program by selecting QAFood in solution explorer and press F5 key.

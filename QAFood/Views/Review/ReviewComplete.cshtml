@@ -1,0 +1,13 @@
+﻿@model ViewModelBase
+
+@{
+    Model.PageMeta.PageTitle = "Review Complete";
+    Model.PageMeta.Description = "Review Complete";
+    Model.PageMeta.AddKeyword("Review Complete");
+    Model.PageMeta.RobotsFollow = false;
+    Model.PageMeta.RobotsIndex = false;
+}
+
+<h2>Thank you for completing the review @User.Identity.Name!</h2>
+
+<a asp-controller="Review" asp-action="Index">Do another review.</a>

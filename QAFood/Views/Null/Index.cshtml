@@ -1,0 +1,23 @@
+﻿@model IViewModel
+
+@{
+    // Setup some basic defaults for the home page.
+    Model.PageMeta.PageTitle = "Null";
+    Model.PageMeta.Description = "Null";
+    Model.PageMeta.AddKeyword("Null");
+    Model.PageMeta.RobotsFollow = false;
+    Model.PageMeta.RobotsIndex = false;
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>@this.LoremIpsum(3, 6, 1, 1, 1)</h2>
+        <p>@this.LoremIpsum(8, 12, 4, 16, 1)</p>
+        <p>@this.LoremIpsum(8, 12, 4, 16, 1)</p>
+    </div>
+    <div class="col-md-6">
+        <h2>@this.LoremIpsum(3, 6, 1, 1, 1)</h2>
+        <p>@this.LoremIpsum(8, 12, 8, 16, 1)</p>
+        <p>@this.LoremIpsum(8, 12, 4, 16, 1)</p>
+    </div>
+</div>

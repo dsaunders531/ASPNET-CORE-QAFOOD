@@ -3,3 +3,7 @@
 ################################################################################
 
 /mezzanine.essentials/bin/Debug/netcoreapp2.1
+/mezzanine.essentials/obj/Debug/netcoreapp2.1
+/QAFood/bin/Debug/netcoreapp2.1
+/QAFood/obj/Debug/netcoreapp2.1
+/.vs

@@ -1,0 +1,123 @@
+﻿@model IViewModel
+
+<!DOCTYPE html>
+<html lang="@this.UserLang.ToLower()" dir="@this.TextDirection">
+<head>
+    @* Use the meta tag helper to add the meta tags to the page *@
+    <meta meta-model="@Model.PageMeta" meta-user-culture-name="@this.UserLang.ToLower()"/>
+    
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/3.3.7/css/bootstrap.min.css"  />
+        <link rel="stylesheet" href="~/lib/bootstrap/3.3.7/css/bootstrap-theme.min.css"  />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet"
+              href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+              integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+              crossorigin="anonymous"
+              asp-fallback-href="~/lib/bootstrap/3.3.7/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet"
+              href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+              integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+              crossorigin="anonymous"
+              asp-fallback-href="~/lib/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+    </environment>
+    <link rel="stylesheet" href="~/lib/Font.Awesome/4.7.0/css/font-awesome.min.css" />
+    @* Automatic compliation an minification - Use extension Compile SASS *@
+    <link rel="stylesheet" href="~/css/site.min.css"  />
+</head>
+<body>
+    <noscript>
+        <div class="container">
+            <div class="alert alert-info">
+                <p>Please turn on JavaScript to make full use of this site.</p>
+            </div>
+        </div>
+    </noscript>
+
+    <header class="header">
+        <div class="container">
+            <a asp-controller="Home" asp-action="Index">
+                <img class="" src="~/images/AppLogo.png" />
+            </a>
+
+            <h1>@this.AppInfo.Product</h1>
+        </div>
+    </header>
+
+    @await Html.PartialAsync("_Navigation", Model)
+    
+    <content class="content">
+        <div class="container">
+            @RenderBody()
+        </div>
+    </content>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <ul>
+                    <li>
+                        &copy; @this.AppInfo.Company @DateTime.Now.Year.ToString(this.UserCulture)
+                    </li>
+                    <li>
+                        <span>| </span><a class="" asp-controller="Home" asp-action="Contact">Contact</a>
+                    </li>
+                    <li>
+                        <span>| </span><a class="" asp-controller="Home" asp-action="About">About</a>
+                    </li>
+                    <li>
+                        <span>| </span><a class="" asp-controller="Legal" asp-action="Cookies">Cookie Policy</a>
+                    </li>
+                    <li>
+                        <span>| </span><a class="" asp-controller="Legal" asp-action="GDPR">GDPR</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <div id="cookieMessage" class="modal fade" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-header">
+                <h2>This site uses cookies to provide you with services.</h2>
+            </div>
+            <div class="modal-body">
+                <p>By clicking on the button, you agree for this site to save cookies.</p>
+                <button id="cookieMessage" class="btn btn-primary" type="button" data-dismiss="modal" onclick="cookieMessage_click()">OK - save cookies.</button>
+                <br />
+                <p>You can review our cookie and data protection policy at any time by clicking on the links at the bottom of the page.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <environment include="Development">
+        <script src="~/lib/jquery/3.3.1/jquery-3.3.1.min.js"></script>
+        <script src="~/lib/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="~/js/navbar.js"></script>
+        <script src="~/js/cookieMessage.js"></script>
+        <script src="~/js/site.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+                integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+                crossorigin="anonymous"
+                asp-fallback-src="~/lib/jquery/3.3.1/jquery-3.3.1.min.js"
+                asp-fallback-test="window.jQuery">
+        </script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+                crossorigin="anonymous"
+                asp-fallback-src="~/lib/bootstrap/3.3.7/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
+        </script>
+        @* Load the minified js files (see bundleconfig.json) - Use extension Bundler and Minifier *@
+        <script src="~/js/site.min.js"></script>
+    </environment>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

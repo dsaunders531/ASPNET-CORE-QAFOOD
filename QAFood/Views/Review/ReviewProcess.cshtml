@@ -1,0 +1,218 @@
+﻿@model ReviewProcessViewModel
+
+@{
+    Model.PageMeta.PageTitle = "Process review";
+    Model.PageMeta.Description = "Submit a review";
+    Model.PageMeta.AddKeyword("Submit a review");
+    Model.PageMeta.RobotsFollow = false;
+    Model.PageMeta.RobotsIndex = false;
+}
+
+@* Display Test Name -> food parcel name -> food item name -> categories -> radio list of result *@
+
+<h2>@Model.TestName</h2>
+<h3>What did you think about our <strong>@Model.FoodItemName</strong>?</h3>
+
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form asp-controller="Review" asp-action="SaveReview" method="post" class="form-horizontal" asp-antiforgery="true">
+    <input type="hidden" name="TestId" value="@Model.TestId" />
+    <input type="hidden" name="FoodParcelId" value="@Model.FoodParcelId" />
+    <input type="hidden" name="SelectedFoodItemId" value="@Model.SelectedFoodItemId" />
+
+    <!-- heading -->
+    <div class="row more-padding-top text-center desktop-only-visible">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-2"><i class="fa fa-thumbs-down"></i> Bad</div>
+        <div class="col-sm-2"><i class="fa fa-thumbs-o-down"></i></div>
+        <div class="col-sm-2"><i class="fa fa-pause"></i> Average</div>
+        <div class="col-sm-2"><i class="fa fa-thumbs-o-up"></i></div>
+        <div class="col-sm-2"><i class="fa fa-thumbs-up"></i> Excellent</div>
+    </div>
+
+    <div class="form-group row">
+        @* 
+          This would be a lot easier if using a loop of items but it would be difficult to set the value and pass back when the page is on the client. 
+          REVIEW - use a view component or tag helper make this easier. there is a lot of duplicate code.
+        *@
+
+        <label asp-for="PresentationValue" for="PresentationValue" class="control-label col-sm-2"></label>
+        @for (int i = Model.MinResultValue; i <= Model.MaxResultvalue; i++)
+        {
+            <div class="col-sm-2 text-center">
+                @switch (i)
+                {
+                    case 1:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-down"></i> Bad</span>
+                        break;
+                    case 2:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-o-down"></i></span>
+                        break;
+                    case 3:
+                        <span class="mobile-only-visible"><i class="fa fa-pause"></i> Average</span>
+                        break;
+                    case 4:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-o-up"></i></span>
+                        break;
+                    case 5:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-up"></i> Excellent</span>
+                        break;
+                    default:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-up"></i> Excellent</span>
+                        break;
+                }
+
+                @if (Model.PresentationValue == i)
+                {
+                    <input asp-for="PresentationValue" type="radio" name="PresentationValue" class="" value="@i.ToString()" checked />
+                }
+                else if (Model.PresentationValue == 0 && i == Model.MaxResultvalue)
+                {
+                    <input asp-for="PresentationValue" type="radio" name="PresentationValue" class="" value="@i.ToString()" checked />
+                }
+                else
+                {
+                    <input asp-for="PresentationValue" type="radio" name="PresentationValue" class="" value="@i.ToString()" />
+                }
+            </div>
+        }
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="TextureValue" for="TextureValue" class="control-label col-sm-2"></label>
+        @for (int i = Model.MinResultValue; i <= Model.MaxResultvalue; i++)
+        {
+            <div class="col-sm-2 text-center">
+                @switch (i)
+                {
+                    case 1:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-down"></i> Bad</span>
+                        break;
+                    case 2:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-o-down"></i></span>
+                        break;
+                    case 3:
+                        <span class="mobile-only-visible"><i class="fa fa-pause"></i> Average</span>
+                        break;
+                    case 4:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-o-up"></i></span>
+                        break;
+                    case 5:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-up"></i> Excellent</span>
+                        break;
+                    default:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-up"></i> Excellent</span>
+                        break;
+                }
+
+                @if (Model.TextureValue == i)
+                {
+                    <input asp-for="TextureValue" type="radio" name="TextureValue" class="" value="@i.ToString()" checked />
+                }
+                else if (Model.TextureValue == 0 && i == Model.MaxResultvalue)
+                {
+                    <input asp-for="TextureValue" type="radio" name="TextureValue" class="" value="@i.ToString()" checked />
+                }
+                else
+                {
+                    <input asp-for="TextureValue" type="radio" name="TextureValue" class="" value="@i.ToString()" />
+                }
+            </div>
+        }
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="AromaValue" for="AromaValue" class="control-label col-sm-2"></label>
+        @for (int i = Model.MinResultValue; i <= Model.MaxResultvalue; i++)
+        {
+            <div class="col-sm-2 text-center">
+                @switch (i)
+                {
+                    case 1:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-down"></i> Bad</span>
+                        break;
+                    case 2:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-o-down"></i></span>
+                        break;
+                    case 3:
+                        <span class="mobile-only-visible"><i class="fa fa-pause"></i> Average</span>
+                        break;
+                    case 4:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-o-up"></i></span>
+                        break;
+                    case 5:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-up"></i> Excellent</span>
+                        break;
+                    default:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-up"></i> Excellent</span>
+                        break;
+                }
+
+                @if (Model.AromaValue == i)
+                {
+                    <input asp-for="AromaValue" type="radio" name="AromaValue" class="" value="@i.ToString()" checked />
+                }
+                else if (Model.AromaValue == 0 && i == Model.MaxResultvalue)
+                {
+                    <input asp-for="AromaValue" type="radio" name="AromaValue" class="" value="@i.ToString()" checked />
+                }
+                else
+                {
+                    <input asp-for="AromaValue" type="radio" name="AromaValue" class="" value="@i.ToString()" />
+                }
+            </div>
+        }
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="FlavourValue" for="FlavourValue" class="control-label col-sm-2"></label>
+        @for (int i = Model.MinResultValue; i <= Model.MaxResultvalue; i++)
+        {
+            <div class="col-sm-2 text-center">
+                @switch (i)
+                {
+                    case 1:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-down"></i> Bad</span>
+                        break;
+                    case 2:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-o-down"></i></span>
+                        break;
+                    case 3:
+                        <span class="mobile-only-visible"><i class="fa fa-pause"></i> Average</span>
+                        break;
+                    case 4:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-o-up"></i></span>
+                        break;
+                    case 5:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-up"></i> Excellent</span>
+                        break;
+                    default:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-up"></i> Excellent</span>
+                        break;
+                }
+
+                @if (Model.FlavourValue == i)
+                {
+                    <input asp-for="FlavourValue" type="radio" name="FlavourValue" class="" value="@i.ToString()" checked />
+                }
+                else if (Model.FlavourValue == 0 && i == Model.MaxResultvalue)
+                {
+                    <input asp-for="FlavourValue" type="radio" name="FlavourValue" class="" value="@i.ToString()" checked />
+                }
+                else
+                {
+                    <input asp-for="FlavourValue" type="radio" name="FlavourValue" class="" value="@i.ToString()" />
+                }
+            </div>
+        }
+    </div>
+
+    <div class="form-group row btn-group">
+        <button type="submit" class="btn btn-primary btn-lg"><i class="fa fa-save"> </i> Save Review</button>
+        <button type="reset" class="btn btn-warning btn-lg"><i class="fa fa-close"> </i> Reset</button>
+    </div>
+</form>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

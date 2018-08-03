@@ -1,0 +1,30 @@
+﻿@model IViewModel
+
+@{
+    // Setup some basic defaults for the home page.
+    Model.PageMeta.PageTitle = "Home";
+    Model.PageMeta.Description = "Home Page";
+    Model.PageMeta.AddKeyword("Home");
+}
+
+
+<h2>Login or register to review a food parcel.</h2>
+
+<div class="row">
+    <div class="col-md-3">
+        <h2>@this.LoremIpsum(3, 6, 1, 1, 1)</h2>
+        <p>@this.LoremIpsum(8, 12, 4, 16, 1)</p>
+    </div>
+    <div class="col-md-3">
+        <h2>@this.LoremIpsum(3, 6, 1, 1, 1)</h2>
+        <p>@this.LoremIpsum(8, 12, 4, 16, 1)</p>
+    </div>
+    <div class="col-md-3">
+        <h2>@this.LoremIpsum(3, 6, 1, 1, 1)</h2>
+        <p>@this.LoremIpsum(8, 12, 4, 16, 1)</p>
+    </div>
+    <div class="col-md-3">
+        <h2>@this.LoremIpsum(3, 6, 1, 1, 1)</h2>
+        <p>@this.LoremIpsum(8, 12, 4, 16, 1)</p>
+    </div>
+</div>

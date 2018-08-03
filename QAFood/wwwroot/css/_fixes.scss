@@ -1,0 +1,37 @@
+﻿/*
+    Site Style.
+
+    This is not a complete solution - you will need to make changes for different brand images.
+
+*/
+
+@import '_functions.scss';
+@import '_theme.scss';
+
+.more-padding-top {
+    padding-top: 21px;
+    padding-bottom: 14px;
+}
+
+.mobile-only-visible
+{ }
+
+.desktop-only-visible {
+    max-height: 0px;
+    max-width: 0px;
+    visibility: hidden;
+}
+
+@media (min-width: 768px) {
+    .mobile-only-visible {
+        max-height: 0px;
+        max-width: 0px;
+        visibility: hidden;
+    }
+
+    .desktop-only-visible {
+        max-height: initial;
+        max-width: initial;
+        visibility: initial;
+    }
+}

@@ -1,0 +1,56 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <Version>0.0.1</Version>
+    <Authors>Duncan Saunders</Authors>
+    <Company>Duncan Saunders</Company>
+    <Product>QA Food</Product>
+    <Description>An example MVC site using .Net Core</Description>
+    <Copyright>Duncan Saunders</Copyright>
+    <PackageTags>.Net Core, MVC, Tool, Template, Bootstrap</PackageTags>
+    <PackageReleaseNotes></PackageReleaseNotes>
+    <AssemblyName>QA Food</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\ApplicationDb\20180802123334_AppModels.cs" />
+    <Compile Remove="Migrations\ApplicationDb\20180802123334_AppModels.Designer.cs" />
+    <Compile Remove="Migrations\ApplicationDb\20180802124104_AppModels.cs" />
+    <Compile Remove="Migrations\ApplicationDb\20180802124104_AppModels.Designer.cs" />
+    <Compile Remove="Migrations\ApplicationDb\20180802124816_AppModels.cs" />
+    <Compile Remove="Migrations\ApplicationDb\20180802124816_AppModels.Designer.cs" />
+    <Compile Remove="Migrations\ApplicationDb\20180802160010_Update1.cs" />
+    <Compile Remove="Migrations\ApplicationDb\20180802160010_Update1.Designer.cs" />
+    <Compile Remove="Migrations\ApplicationDb\20180802161331_Update2.cs" />
+    <Compile Remove="Migrations\ApplicationDb\20180802161331_Update2.Designer.cs" />
+    <Compile Remove="Migrations\ApplicationDb\20180802201010_Update3.cs" />
+    <Compile Remove="Migrations\ApplicationDb\20180802201010_Update3.Designer.cs" />
+    <Compile Remove="Migrations\ApplicationDb\20180803090604_Update4.cs" />
+    <Compile Remove="Migrations\ApplicationDb\20180803090604_Update4.Designer.cs" />
+    <Compile Remove="Migrations\ApplicationDb\20180803100819_Update1.cs" />
+    <Compile Remove="Migrations\ApplicationDb\20180803100819_Update1.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\mezzanine.essentials\mezzanine.essentials.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Views\Legal\GDPR.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Legal\Cookies.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+
+</Project>
