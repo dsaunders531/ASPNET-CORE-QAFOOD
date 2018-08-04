@@ -12,34 +12,40 @@
 <br />
 <p>Select a food parcel to start or amend a review.</p>
 
-@foreach (FoodParcel item in Model.FoodParcels)
+@if (Model.FoodParcels.Count == 0)
 {
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4>@item.Name</h4>
-            <p>Posted on @item.PostedDate.ToShortDateString().</p>
-        </div>
-        <div class="panel-body">
-            @if (item.FoodItems.Count == 0)
-            {
-                <p>No items were found for this parcel.</p>
-            }
-            else
-            {
-                <p>The parcel contained these items</p>
-                <ul class="list-group">
-                    @*Call to Model.GetFoodParcelItems(item) twice*@
-                    @foreach (FoodItem fooditem in item.FoodItems.OrderBy(f => f.Description))
-                    {
-                        <li class="list-group-item">@fooditem.Description</li>
-                    }
-                </ul>
-            }
+    <p>There are no food parcels to review.</p>
+}
+else
+{
+    @foreach (FoodParcel item in Model.FoodParcels)
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>@item.Name</h4>
+                <p>Posted on @item.PostedDate.ToShortDateString().</p>
+            </div>
+            <div class="panel-body">
+                @if (item.FoodItems.Count == 0)
+                {
+                    <p>No items were found for this parcel.</p>
+                }
+                else
+                {
+                    <p>The parcel contained these items</p>
+                    <ul class="list-group">
+                        @foreach (FoodItem fooditem in item.FoodItems.OrderBy(f => f.Description))
+                        {
+                            <li class="list-group-item">@fooditem.Description</li>
+                        }
+                    </ul>
+                }
 
+            </div>
+            <div class="panel-footer">
+                @* Add parcelid to the route to start review *@
+                <a asp-controller="Review" asp-action="ReviewStart" asp-route-parcelId="@item.Id"><i class="fa fa-check"> </i> Review this parcel.</a>
+            </div>
         </div>
-        <div class="panel-footer">
-            @* Add parcelid to the route to start review *@
-            <a asp-controller="Review" asp-action="ReviewStart" asp-route-parcelId="@item.Id"><i class="fa fa-check"> </i> Review this parcel.</a>
-        </div>
-    </div>
+    }
 }

@@ -169,9 +169,6 @@ namespace QAFood.Controllers
             if (ModelState.IsValid == true)
             {
                 // Save Review data.
-                // HACK - I need to do this call otherwise the linq to get TestResult is null. Test result (t.TestResult) does not work automatically!
-                TestResult testResult = this.TestResultRepository.Get(model.TestId);
-                model.TestName = testResult.Name;
 
                 // Match the values in the model with database
                 List<TestResultItem> testResultItems = (from TestResultItem t in this.TestResultItemRepository.GetAll.AsParallel().WithDegreeOfParallelism(2)

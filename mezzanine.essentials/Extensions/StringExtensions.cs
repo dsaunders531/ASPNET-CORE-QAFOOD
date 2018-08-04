@@ -36,6 +36,47 @@ namespace mezzanine.Extensions
         }
 
         /// <summary>
+        /// Add an s to the end of text when the count is above 1.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>        
+        public static string Pluralize(this string value, decimal count)
+        {
+            if (count != 1)
+            {
+                value += "s";
+            }
+
+            return value;
+        }
+
+        public static string Pluralize(this string value, long count)
+        {
+            return Pluralize(value, (decimal)count);
+        }
+
+        public static string Pluralize(this string value, int count)
+        {
+            return Pluralize(value, (decimal)count);
+        }
+
+        public static string Pluralize(this string value, short count)
+        {
+            return Pluralize(value, (decimal)count);
+        }
+
+        public static string Pluralize(this string value, byte count)
+        {
+            return Pluralize(value, (decimal)count);
+        }
+
+        public static string Pluralize(this string value, double count)
+        {
+            return Pluralize(value, (decimal)count);
+        }
+
+        /// <summary>
         /// Get the log level from a string (ie: from the json config file)
         /// </summary>
         /// <param name="value"></param>

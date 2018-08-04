@@ -7,3 +7,5 @@
 /QAFood/bin/Debug/netcoreapp2.1
 /QAFood/obj/Debug/netcoreapp2.1
 /.vs
+/mezzanine.essentials/obj
+/QAFood/obj

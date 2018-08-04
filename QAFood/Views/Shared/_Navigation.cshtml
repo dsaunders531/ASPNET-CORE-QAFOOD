@@ -21,15 +21,15 @@
         <div id="navbar" class="collapse navbar-collapse" aria-expanded="false">
             <ul class="nav navbar-nav">
                 @*
-                    The ids must follow the pattern nav_{controller}_{action} in lower case.
-                    otherwise they will not be selected by navbar.js
+        The ids must follow the pattern nav_{controller}_{action} in lower case.
+        otherwise they will not be selected by navbar.js
 
-                    After adding new nav entries, update navbar.js with the appropriate values.
-                    It should be fine with conventional controller action url patterns.
+        After adding new nav entries, update navbar.js with the appropriate values.
+        It should be fine with conventional controller action url patterns.
 
-                    There must be an id nav_home_index. This is the fallback if the others cannot be found.
+        There must be an id nav_home_index. This is the fallback if the others cannot be found.
 
-                    Only 1 level of dropdown menu is supported.
+        Only 1 level of dropdown menu is supported.
                 *@
                 <li id="nav_home_index">
                     <a asp-controller="Home" asp-action="Index">
@@ -48,6 +48,17 @@
                     <li id="nav_review_index">
                         <a asp-controller="Review" asp-action="Index">Review a food parcel</a>
                     </li>
+                    @if (User.IsInRole("Admins"))
+                    {
+                        <li id="nav_testresults_index" class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Test Results <span class="fa fa-caret-down"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a asp-controller="TestResult" asp-action="Index">View Test Results</a>
+                                </li>                                
+                            </ul>
+                        </li>
+                    }
                 }
             </ul>
             <ul class="nav navbar-nav navbar-right">

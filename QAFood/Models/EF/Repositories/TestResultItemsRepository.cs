@@ -1,4 +1,5 @@
-﻿using QAFood.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using QAFood.Models;
 using System.Linq;
 
 namespace QAFood.EF
@@ -14,7 +15,9 @@ namespace QAFood.EF
         {
             get
             {
-                return this.Context.TestResultItems;                  
+                return this.Context.TestResultItems.Include(c => c.Category)
+                                                   .Include(f => f.FoodItem)
+                                                   .Include(t => t.TestResult);                  
             }
         }
 

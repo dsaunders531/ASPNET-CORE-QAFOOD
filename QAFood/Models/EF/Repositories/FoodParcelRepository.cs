@@ -17,7 +17,8 @@ namespace QAFood.EF
             {
                 IQueryable<FoodParcel> result = this.Context.FoodParcels
                                                     .Include(i => i.FoodItems)
-                                                    .Include(t => t.TestResults);
+                                                    .Include(t => t.TestResults).ThenInclude(q => q.TestResultItems).ThenInclude(f => f.FoodItem)
+                                                    .Include(a => a.TestResults).ThenInclude(b => b.TestResultItems).ThenInclude(c => c.Category);
                                                   
                 // populate the linked data
                 return result;
@@ -40,12 +41,14 @@ namespace QAFood.EF
         }
 
         public void Save()
-        {
+        {           
             this.Context.SaveChanges();
         }
 
         public void Update(FoodParcel item)
-        {           
+        {
+            // Ignore the then includes
+            this.Context.AttachRange(item.TestResults.Select(r => r.TestResultItems));
             this.Context.FoodParcels.Update(item);
         }
     }
