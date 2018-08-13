@@ -7,6 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QAFood", "QAFood\QAFood.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "mezzanine.essentials", "mezzanine.essentials\mezzanine.essentials.csproj", "{B84956CA-2458-45E5-86AC-E42BBB570DB4}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QAFood.DAL", "QAFood.DAL\QAFood.DAL.csproj", "{114F040C-92EC-44F5-95E5-DA818EEE39F3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QAFood.BLL", "QAFood.BLL\QAFood.BLL.csproj", "{BBE617E9-2646-4FF8-8A4D-EE0072F067C5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QAFood.XUnitTests", "QAFood.XUnitTests\QAFood.XUnitTests.csproj", "{1D88A456-BB14-46A6-8C6B-B0349CAEF9BD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +27,18 @@ Global
 		{B84956CA-2458-45E5-86AC-E42BBB570DB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B84956CA-2458-45E5-86AC-E42BBB570DB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B84956CA-2458-45E5-86AC-E42BBB570DB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{114F040C-92EC-44F5-95E5-DA818EEE39F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{114F040C-92EC-44F5-95E5-DA818EEE39F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{114F040C-92EC-44F5-95E5-DA818EEE39F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{114F040C-92EC-44F5-95E5-DA818EEE39F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBE617E9-2646-4FF8-8A4D-EE0072F067C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBE617E9-2646-4FF8-8A4D-EE0072F067C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBE617E9-2646-4FF8-8A4D-EE0072F067C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBE617E9-2646-4FF8-8A4D-EE0072F067C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D88A456-BB14-46A6-8C6B-B0349CAEF9BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D88A456-BB14-46A6-8C6B-B0349CAEF9BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D88A456-BB14-46A6-8C6B-B0349CAEF9BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D88A456-BB14-46A6-8C6B-B0349CAEF9BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

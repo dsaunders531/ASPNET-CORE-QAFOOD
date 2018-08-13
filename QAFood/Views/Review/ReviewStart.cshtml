@@ -1,19 +1,23 @@
 ﻿@model ReviewStartViewModel
 
+@* 
+    The review page.
+    This page is interactive and uses jQuery ajax to get and save the users choices.
+*@
+
 @{
     Model.PageMeta.PageTitle = "Review";
     Model.PageMeta.Description = "Start a review";
     Model.PageMeta.AddKeyword("Perform a review");
     Model.PageMeta.RobotsFollow = false;
     Model.PageMeta.RobotsIndex = false;
-
 }
 
 <h2>@Model.FoodParcel.Name - @Model.TestName</h2>
 
 <div asp-validation-summary="All" class="text-danger"></div>
 
-<form asp-controller="Review" asp-action="ReviewProcess" method="post" class="form-horizontal" asp-antiforgery="true">
+<form class="form-horizontal">
     @* select food item from dropdown *@
     <input type="hidden" name="TestId" value="@Model.TestId" />
     <input type="hidden" name="FoodParcelId" value="@Model.FoodParcel.Id" />
@@ -22,16 +26,204 @@
             <label asp-for="SelectedFoodItemId" class="control-label"></label>
         </div>
         <div class="col-sm-6">
-            <select asp-for="SelectedFoodItemId" asp-items="@Model.FoodItems" class="form-control"></select>
-        </div>        
+            <select id="SelectedFoodItemId" onchange="foodItemSelect_Change(this)" asp-for="SelectedFoodItemId" asp-items="@Model.FoodItems" class="form-control"></select>
+        </div>
     </div>
 
+    <!-- heading -->
+    <div class="row more-padding-top text-center desktop-only-visible">
+        <div class="col-sm-2 show-disabled"></div>
+        <div class="col-sm-2 show-disabled"><i class="fa fa-thumbs-down"></i> Bad</div>
+        <div class="col-sm-2 show-disabled"><i class="fa fa-thumbs-o-down"></i></div>
+        <div class="col-sm-2 show-disabled"><i class="fa fa-pause"></i> Average</div>
+        <div class="col-sm-2 show-disabled"><i class="fa fa-thumbs-o-up"></i></div>
+        <div class="col-sm-2 show-disabled"><i class="fa fa-thumbs-up"></i> Excellent</div>
+    </div>
+
+    <!-- Presentation Value -->
+    <div class="form-group row">
+        <label id="presentationValue" class="control-label col-sm-2 show-disabled">Presentation</label>
+        @for (int i = 1; i <= 5; i++)
+        {
+            <div class="col-sm-2 text-center">
+                @switch (i)
+                {
+                    case 1:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-down show-disabled"></i> Bad</span>
+                        break;
+                    case 2:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-o-down show-disabled"></i></span>
+                        break;
+                    case 3:
+                        <span class="mobile-only-visible"><i class="fa fa-pause show-disabled"></i> Average</span>
+                        break;
+                    case 4:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-o-up show-disabled"></i></span>
+                        break;
+                    case 5:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-up show-disabled"></i> Excellent</span>
+                        break;
+                    default:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-up show-disabled"></i> Excellent</span>
+                        break;
+                }
+
+                @if (i == 5)
+                {
+                    <input id="@String.Format("presentationValue_{0}",i.ToString())" disabled="disabled" type="radio" name="presentationValue" class="disabled" value="@i.ToString()" checked="checked" />
+                }
+                else
+                {
+                    <input id="@String.Format("presentationValue_{0}",i.ToString())" disabled="disabled" type="radio" name="presentationValue" class="disabled" value="@i.ToString()" checked="" />
+                }
+            </div>
+        }
+    </div>
+
+    <!-- Texture Value -->
+    <div class="form-group row">
+        <label id="textureValue" class="control-label col-sm-2 show-disabled">Texture</label>
+        @for (int i = 1; i <= 5; i++)
+        {
+            <div class="col-sm-2 text-center">
+                @switch (i)
+                {
+                    case 1:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-down show-disabled"></i> Bad</span>
+                        break;
+                    case 2:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-o-down show-disabled"></i></span>
+                        break;
+                    case 3:
+                        <span class="mobile-only-visible"><i class="fa fa-pause show-disabled"></i> Average</span>
+                        break;
+                    case 4:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-o-up show-disabled"></i></span>
+                        break;
+                    case 5:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-up show-disabled"></i> Excellent</span>
+                        break;
+                    default:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-up show-disabled"></i> Excellent</span>
+                        break;
+                }
+
+                @if (i == 5)
+                {
+                    <input id="@String.Format("textureValue_{0}",i.ToString())" disabled="disabled" type="radio" name="textureValue" class="disabled" value="@i.ToString()" checked="checked" />
+                }
+                else
+                {
+                    <input id="@String.Format("textureValue_{0}",i.ToString())" disabled="disabled" type="radio" name="textureValue" class="disabled" value="@i.ToString()" checked="" />
+                }
+            </div>
+        }
+    </div>
+
+    <!-- Aroma Value -->
+    <div class="form-group row">
+        <label id="aromaValue" class="control-label col-sm-2 show-disabled">Aroma</label>
+        @for (int i = 1; i <= 5; i++)
+        {
+            <div class="col-sm-2 text-center">
+                @switch (i)
+                {
+                    case 1:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-down show-disabled"></i> Bad</span>
+                        break;
+                    case 2:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-o-down show-disabled"></i></span>
+                        break;
+                    case 3:
+                        <span class="mobile-only-visible"><i class="fa fa-pause show-disabled"></i> Average</span>
+                        break;
+                    case 4:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-o-up show-disabled"></i></span>
+                        break;
+                    case 5:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-up show-disabled"></i> Excellent</span>
+                        break;
+                    default:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-up show-disabled"></i> Excellent</span>
+                        break;
+                }
+
+                @if (i == 5)
+                {
+                    <input id="@String.Format("aromaValue_{0}",i.ToString())" disabled="disabled" type="radio" name="aromaValue" class="disabled" value="@i.ToString()" checked="checked" />
+                }
+                else
+                {
+                    <input id="@String.Format("aromaValue_{0}",i.ToString())" disabled="disabled" type="radio" name="aromaValue" class="disabled" value="@i.ToString()" checked="" />
+                }
+            </div>
+        }
+    </div>
+
+    <!-- Flavour Value -->
+    <div class="form-group row">
+        <label id="flavourValue" class="control-label col-sm-2 show-disabled">Flavour</label>
+        @for (int i = 1; i <= 5; i++)
+        {
+            <div class="col-sm-2 text-center">
+                @switch (i)
+                {
+                    case 1:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-down show-disabled"></i> Bad</span>
+                        break;
+                    case 2:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-o-down show-disabled"></i></span>
+                        break;
+                    case 3:
+                        <span class="mobile-only-visible"><i class="fa fa-pause show-disabled"></i> Average</span>
+                        break;
+                    case 4:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-o-up show-disabled"></i></span>
+                        break;
+                    case 5:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-up show-disabled"></i> Excellent</span>
+                        break;
+                    default:
+                        <span class="mobile-only-visible"><i class="fa fa-thumbs-up show-disabled"></i> Excellent</span>
+                        break;
+                }
+
+                @if (i == 5)
+                {
+                    <input id="@String.Format("flavourValue_{0}",i.ToString())" disabled="disabled" type="radio" name="flavourValue" value="@i.ToString()" checked="checked" />
+                }
+                else
+                {
+                    <input id="@String.Format("flavourValue_{0}",i.ToString())" disabled="disabled" type="radio" name="flavourValue" value="@i.ToString()" checked="" />
+                }
+            </div>
+        }
+    </div>
+
+    <div id="working" class="alert-info row hidden">
+        <div class="col-sm-12 more-padding-top text-center">
+            <i class="fa fa-spinner fa-spin"></i> Working on it ...
+        </div>
+    </div>
+
+    <div id="saved" class="alert-success row hidden">
+        <div class="col-sm-12 more-padding-top text-center">
+            <i class="fa fa-star"></i> Thank you. Your review has been saved. You can review another item.
+        </div>
+    </div>
+
+    <!-- Save the data using the api -->    
     <div class="form-group row btn-group">
-        <button type="submit" class="btn btn-primary btn-lg"><i class="fa fa-save"> </i> Review selected item</button>
+        <button type="button" class="btn btn-primary btn-lg" onclick="Submit_click()"><i class="fa fa-save"> </i> Review selected item</button>
         <button type="reset" class="btn btn-warning btn-lg"><i class="fa fa-close"> </i> Reset</button>
     </div>
+
 </form>
+
+<div id="notepad"></div>
 
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
+    
+    <script src="~/js/Review/ReviewStart.js" type="text/javascript"></script>
 }

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <Version>0.0.1</Version>
+    <Version>1.0.1</Version>
     <Authors>Duncan Saunders</Authors>
     <Company>Duncan Saunders</Company>
     <Product>QA Food</Product>
@@ -11,25 +11,13 @@
     <PackageTags>.Net Core, MVC, Tool, Template, Bootstrap</PackageTags>
     <PackageReleaseNotes></PackageReleaseNotes>
     <AssemblyName>QA Food</AssemblyName>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <FileVersion>1.0.1.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\ApplicationDb\20180802123334_AppModels.cs" />
-    <Compile Remove="Migrations\ApplicationDb\20180802123334_AppModels.Designer.cs" />
-    <Compile Remove="Migrations\ApplicationDb\20180802124104_AppModels.cs" />
-    <Compile Remove="Migrations\ApplicationDb\20180802124104_AppModels.Designer.cs" />
-    <Compile Remove="Migrations\ApplicationDb\20180802124816_AppModels.cs" />
-    <Compile Remove="Migrations\ApplicationDb\20180802124816_AppModels.Designer.cs" />
-    <Compile Remove="Migrations\ApplicationDb\20180802160010_Update1.cs" />
-    <Compile Remove="Migrations\ApplicationDb\20180802160010_Update1.Designer.cs" />
-    <Compile Remove="Migrations\ApplicationDb\20180802161331_Update2.cs" />
-    <Compile Remove="Migrations\ApplicationDb\20180802161331_Update2.Designer.cs" />
-    <Compile Remove="Migrations\ApplicationDb\20180802201010_Update3.cs" />
-    <Compile Remove="Migrations\ApplicationDb\20180802201010_Update3.Designer.cs" />
-    <Compile Remove="Migrations\ApplicationDb\20180803090604_Update4.cs" />
-    <Compile Remove="Migrations\ApplicationDb\20180803090604_Update4.Designer.cs" />
-    <Compile Remove="Migrations\ApplicationDb\20180803100819_Update1.cs" />
-    <Compile Remove="Migrations\ApplicationDb\20180803100819_Update1.Designer.cs" />
+    <Content Remove="Views\Review\ReviewComplete.cshtml" />
+    <Content Remove="Views\Review\ReviewProcess.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,6 +30,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\mezzanine.essentials\mezzanine.essentials.csproj" />
+    <ProjectReference Include="..\QAFood.BLL\QAFood.BLL.csproj" />
+    <ProjectReference Include="..\QAFood.DAL\QAFood.DAL.csproj" />
   </ItemGroup>
 
   <ItemGroup>

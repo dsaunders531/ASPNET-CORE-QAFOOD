@@ -1,7 +1,8 @@
-﻿using QAFood.Models;
+﻿using QAFood.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
+using System.Threading.Tasks;
 
 namespace QAFood.Controllers
 {

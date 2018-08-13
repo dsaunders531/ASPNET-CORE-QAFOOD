@@ -5271,6 +5271,34 @@
         "runtime": {
           "bin/placeholder/mezzanine.essentials.dll": {}
         }
+      },
+      "QAFood.BLL/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.1",
+        "dependencies": {
+          "Microsoft.AspNetCore.All": "2.1.2",
+          "QAFood.DAL": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/QAFood.BLL.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/QAFood.BLL.dll": {}
+        }
+      },
+      "QAFood.DAL/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.1",
+        "dependencies": {
+          "Microsoft.AspNetCore.All": "2.1.2",
+          "mezzanine.essentials": "0.0.0"
+        },
+        "compile": {
+          "bin/placeholder/QAFood.DAL.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/QAFood.DAL.dll": {}
+        }
       }
     }
   },
@@ -13580,12 +13608,24 @@
       "type": "project",
       "path": "../mezzanine.essentials/mezzanine.essentials.csproj",
       "msbuildProject": "../mezzanine.essentials/mezzanine.essentials.csproj"
+    },
+    "QAFood.BLL/1.0.0": {
+      "type": "project",
+      "path": "../QAFood.BLL/QAFood.BLL.csproj",
+      "msbuildProject": "../QAFood.BLL/QAFood.BLL.csproj"
+    },
+    "QAFood.DAL/1.0.0": {
+      "type": "project",
+      "path": "../QAFood.DAL/QAFood.DAL.csproj",
+      "msbuildProject": "../QAFood.DAL/QAFood.DAL.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
       "Microsoft.AspNetCore.All >= 2.1.2",
       "Microsoft.NETCore.App >= 2.1.0",
+      "QAFood.BLL >= 1.0.0",
+      "QAFood.DAL >= 1.0.0",
       "mezzanine.essentials >= 0.0.0"
     ]
   },
@@ -13594,7 +13634,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
-    "version": "0.0.1",
+    "version": "1.0.1",
     "restore": {
       "projectUniqueName": "C:\\Git\\ASPNET-CORE-QAFOOD\\QAFood\\QAFood.csproj",
       "projectName": "QA Food",
@@ -13621,6 +13661,12 @@
           "projectReferences": {
             "C:\\Git\\ASPNET-CORE-QAFOOD\\mezzanine.essentials\\mezzanine.essentials.csproj": {
               "projectPath": "C:\\Git\\ASPNET-CORE-QAFOOD\\mezzanine.essentials\\mezzanine.essentials.csproj"
+            },
+            "C:\\Git\\ASPNET-CORE-QAFOOD\\QAFood.BLL\\QAFood.BLL.csproj": {
+              "projectPath": "C:\\Git\\ASPNET-CORE-QAFOOD\\QAFood.BLL\\QAFood.BLL.csproj"
+            },
+            "C:\\Git\\ASPNET-CORE-QAFOOD\\QAFood.DAL\\QAFood.DAL.csproj": {
+              "projectPath": "C:\\Git\\ASPNET-CORE-QAFOOD\\QAFood.DAL\\QAFood.DAL.csproj"
             }
           }
         }

@@ -31,11 +31,6 @@
     </div>
 
     <div class="form-group row">
-        @* 
-          This would be a lot easier if using a loop of items but it would be difficult to set the value and pass back when the page is on the client. 
-          REVIEW - use a view component or tag helper make this easier. there is a lot of duplicate code.
-        *@
-
         <label asp-for="PresentationValue" for="PresentationValue" class="control-label col-sm-2"></label>
         @for (int i = Model.MinResultValue; i <= Model.MaxResultvalue; i++)
         {
@@ -64,15 +59,15 @@
 
                 @if (Model.PresentationValue == i)
                 {
-                    <input asp-for="PresentationValue" type="radio" name="PresentationValue" class="" value="@i.ToString()" checked />
+                    <input asp-for="PresentationValue" type="radio" name="PresentationValue" class="" value="@i.ToString()" checked="checked" />
                 }
                 else if (Model.PresentationValue == 0 && i == Model.MaxResultvalue)
                 {
-                    <input asp-for="PresentationValue" type="radio" name="PresentationValue" class="" value="@i.ToString()" checked />
+                    <input asp-for="PresentationValue" type="radio" name="PresentationValue" class="" value="@i.ToString()" checked="checked" />
                 }
                 else
                 {
-                    <input asp-for="PresentationValue" type="radio" name="PresentationValue" class="" value="@i.ToString()" />
+                    <input asp-for="PresentationValue" type="radio" name="PresentationValue" class="" value="@i.ToString()" checked="" />
                 }
             </div>
         }

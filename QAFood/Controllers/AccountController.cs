@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using QAFood.Models;
-using QAFood.ViewModels.Authentication;
+using QAFood.DAL.Models;
+using QAFood.BLL.Workers;
+using QAFood.BLL.ViewModels.Authentication;
 using System.Threading.Tasks;
+using QAFood.BLL.Services;
 
 namespace QAFood.Controllers
 {
@@ -14,17 +16,11 @@ namespace QAFood.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        private UserManager<UserProfileModel> UserManager { get; set; }
-        private SignInManager<UserProfileModel> SignInManager { get; set; }
-        private RoleManager<IdentityRole> RoleManager { get; set; }
-        private string DefaultRole { get; set; }
+        private IdentityService IdentityService { get; set; }
 
-        public AccountController(UserManager<UserProfileModel> userManager, SignInManager<UserProfileModel> signInManager, RoleManager<IdentityRole> roleManager, IAppConfigurationService appConfigurationService)
+        public AccountController(IdentityService identityService)
         {
-            this.UserManager = userManager;
-            this.SignInManager = signInManager;
-            this.RoleManager = roleManager;
-            this.DefaultRole = ((QAFood.Services.AppConfigurationService)appConfigurationService).AppConfiguration.SeedData.DefaultRole;
+            this.IdentityService = identityService;
         }
 
         /// <summary>
@@ -32,7 +28,7 @@ namespace QAFood.Controllers
         /// </summary>
         /// <returns></returns>
         [AllowAnonymous]
-        public ViewResult CreateAccount() => View(new CreateAccountViewModel());
+        public ViewResult CreateAccount(string returnUrl) => View(new CreateAccountViewModel() { ReturnUrl = returnUrl });
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -41,21 +37,21 @@ namespace QAFood.Controllers
         {
             if (ModelState.IsValid == true)
             {                
-                UserProfileModel user = new UserProfileModel { UserName = model.Name, Email = model.Email };
-                IdentityResult result = await this.UserManager.CreateAsync(user, model.Password);
+                IdentityResult result = await this.IdentityService.CreateAccountAsync(model);
 
                 if (result.Succeeded == true)
                 {
-                    // Setup the role for the user if it does not exist.
-                    if (await RoleManager.FindByNameAsync(this.DefaultRole) == null)
-                    {
-                        await RoleManager.CreateAsync(new IdentityRole(this.DefaultRole));
-                    }
-                    await UserManager.AddToRoleAsync(user, this.DefaultRole);
+                    Microsoft.AspNetCore.Identity.SignInResult signInResult = await this.IdentityService.LoginAsync(new LoginViewModel() { Email = model.Email, Password = model.Password, ReturnUrl = model.ReturnUrl });
 
-                    Microsoft.AspNetCore.Identity.SignInResult signInResult = await this.SignInManager.PasswordSignInAsync(user, model.Password, false, false);
-                    
-                    return RedirectToAction("Index", "Home", null); // return the user to the home page since we don't have a return to url in the model.
+                    if (signInResult.Succeeded == true)
+                    {
+                        return Redirect(model.ReturnUrl ?? "/");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Sorry, we could not log you in");
+                        return View(model);
+                    }                    
                 }
                 else
                 {
@@ -92,13 +88,10 @@ namespace QAFood.Controllers
         {
             if (ModelState.IsValid == true)
             {
-                UserProfileModel user = await this.UserManager.FindByEmailAsync(model.Email);
-                if (user != null)
+                Microsoft.AspNetCore.Identity.SignInResult signInResult = await this.IdentityService.LoginAsync(model);
+
+                if (signInResult != null)
                 {
-                    await this.SignInManager.SignOutAsync();
-
-                    Microsoft.AspNetCore.Identity.SignInResult signInResult = await this.SignInManager.PasswordSignInAsync(user, model.Password, false, false);
-
                     if (signInResult.Succeeded == true)
                     {
                         return Redirect(model.ReturnUrl ?? "/");
@@ -126,10 +119,11 @@ namespace QAFood.Controllers
         /// </summary>
         /// <returns></returns>
         [Authorize]
-        public async Task<IActionResult> Logout()
+        public async Task<IActionResult> Logout(string returnUrl)
         {
-            await SignInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            await this.IdentityService.Logout();
+
+            return Redirect(returnUrl ?? "/");
         }
     }
 }

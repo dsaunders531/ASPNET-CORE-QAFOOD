@@ -14,7 +14,7 @@ namespace mezzanine.Extensions
         /// <param name="trim">Optionally, trim the white space from the string</param>
         /// <param name="value">The string you want to minify.</param>
         /// <returns>A flat string</returns>
-        public static string Minify(this string value, bool trim = false)
+        public static string Minify(this string value, bool trim = true)
         {
             value = value.Replace("\r", string.Empty); // Carriage Return
             value = value.Replace("\n", string.Empty); // New Line

@@ -1,10 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using QAFood.EF;
-using QAFood.Models;
+using QAFood.DAL;
+using QAFood.DAL.Models;
 using QAFood.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using QAFood.BLL.ViewModels;
+//using QAFood.BLL.Workers;
+using QAFood.BLL.Services;
 
 namespace QAFood.Controllers
 {
@@ -14,11 +18,11 @@ namespace QAFood.Controllers
     [Authorize]
     public class TestResultController : Controller
     {
-        private IRepository<FoodParcel> FoodParcelRepository { get; set; }
+        private TestResultService TestResultService { get; set; }
 
-        public TestResultController(IRepository<FoodParcel> foodParcelRepository)
+        public TestResultController(TestResultService testResultService)
         {
-            this.FoodParcelRepository = foodParcelRepository;
+            this.TestResultService = testResultService;
         }
 
         /// <summary>
@@ -27,9 +31,8 @@ namespace QAFood.Controllers
         /// <returns></returns>
         [Authorize(Roles = "Admins")]
         public IActionResult Index()
-        {
-            List<FoodParcel> foodParcels = this.FoodParcelRepository.GetAll.ToList();
-            TestResultViewModel result = new TestResultViewModel() { FoodParcels = foodParcels };
+        {            
+            TestResultViewModel result = new TestResultViewModel() { FoodParcels = this.TestResultService.GetFoodParcels() };
             return View(result);
         }
     }

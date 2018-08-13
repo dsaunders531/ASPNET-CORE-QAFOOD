@@ -1,104 +1,12 @@
 ﻿@model TestResultViewModel
 
+@inject TestResultService TestResultService
+
 @{
     // Setup some basic defaults for the home page.
     Model.PageMeta.PageTitle = "Test Results";
     Model.PageMeta.Description = "Test Results";
     Model.PageMeta.AddKeyword("Test Results");
-}
-
-@functions {
-    // REVIEW - These functions would be better in a mangager class and made available by injection.
-
-    /// <summary>
-    /// Get the list of all completed tests in a food parcel.
-    /// </summary>
-    /// <param name="foodParcel"></param>
-    /// <returns></returns>
-    public List<TestResultItem> CompletedTests(FoodParcel foodParcel)
-    {
-        List<TestResultItem> result = new List<TestResultItem>();
-
-        if (foodParcel.TestResults != null)
-        {
-            foreach (TestResult item in foodParcel.TestResults)
-            {
-                result.AddRange(from TestResultItem t in item.TestResultItems where t.Result > 0 select t);
-            }
-        }
-
-        return result.OrderBy(f => f.FoodItem.Description).ToList();
-    }
-
-    /// <summary>
-    /// Count the reviews for a food item.
-    /// </summary>
-    /// <param name="foodItem"></param>
-    /// <param name="testResultItems"></param>
-    /// <returns></returns>
-    public long ReviewCountForFoodItem(FoodItem foodItem, List<TestResultItem> testResultItems)
-    {
-        long result = 0;
-
-        // LINQ with grouping
-        IEnumerable<IGrouping<long, TestResultItem>> linqGroup = from TestResultItem t in this.CompletedReviewsForFoodItem(foodItem, testResultItems)
-                                                                 group t by t.TestResultId into groupedTestResult
-                                                                 orderby groupedTestResult.Key
-                                                                 select groupedTestResult;
-
-        result = linqGroup.Count();
-
-        return result;
-    }
-
-    /// <summary>
-    /// Get a list of completed reviews for a food item.
-    /// </summary>
-    /// <param name="foodItem"></param>
-    /// <param name="testResultItems"></param>
-    /// <returns></returns>
-    private List<TestResultItem> CompletedReviewsForFoodItem(FoodItem foodItem, List<TestResultItem> testResultItems)
-    {
-        return (from TestResultItem t in testResultItems where t.FoodItemId == foodItem.Id && t.Result > 0 select t).ToList();
-    }
-
-    /// <summary>
-    /// Get a distinct list of test categories from the test results.
-    /// </summary>
-    /// <param name="foodItemTestResults"></param>
-    /// <returns></returns>
-    public List<string> CategoriesForTestResults(List<TestResultItem> foodItemTestResults)
-    {
-        List<string> result = new List<String>();
-
-        IEnumerable<IGrouping<string, TestResultItem>> linqGroup = from TestResultItem t in foodItemTestResults
-                                                                   group t by t.Category.Value into groupedCategories
-                                                                   orderby groupedCategories.Key
-                                                                   select groupedCategories;
-
-        foreach (var item in linqGroup)
-        {
-            result.Add(item.Key);
-        }
-
-        return result;
-    }
-
-    /// <summary>
-    /// Get the sum of testresultitem.result for the specified food item and category.
-    /// </summary>
-    /// <param name="foodItem"></param>
-    /// <param name="category"></param>
-    /// <param name="completedTests"></param>
-    /// <returns></returns>
-    public long ResultTotalForFoodItemAndCategory(FoodItem foodItem, string category, List<TestResultItem> completedTests)
-    {
-        long result = 0;
-
-        result = (long)(from TestResultItem t in completedTests where t.FoodItemId == foodItem.Id && t.Category.Value == category select (decimal)t.Result).Sum();
-
-        return result;
-    }
 }
 
 @* Test Results page: Parcels -> Food Items -> Quantity reviews, total score / max score (q reviews * 5), average score *@
@@ -127,12 +35,11 @@ else
                 }
                 else
                 {
-
-                    List<TestResultItem> completedTests = this.CompletedTests(foodParcel);
+                    List<TestResultItem> completedTests = TestResultService.CompletedTests(foodParcel);
 
                     foreach (FoodItem foodItem in foodParcel.FoodItems)
                     {
-                        long foodItemTestCount = this.ReviewCountForFoodItem(foodItem, completedTests);
+                        long foodItemTestCount = TestResultService.ReviewCountForFoodItem(foodItem, completedTests);
 
                         <h3>@foodItem.Description</h3>
                         <p>
@@ -148,11 +55,11 @@ else
                             </div>
 
                             @* A list of category with Sum over possible and average *@
-                            List<string> testCategories = this.CategoriesForTestResults(this.CompletedReviewsForFoodItem(foodItem, completedTests));
+                            List<string> testCategories = TestResultService.CategoriesForTestResults(TestResultService.CompletedReviewsForFoodItem(foodItem, completedTests));
 
                             foreach (string category in testCategories)
                             {
-                                long categoryTotal = this.ResultTotalForFoodItemAndCategory(foodItem, category, completedTests);
+                                long categoryTotal = TestResultService.ResultTotalForFoodItemAndCategory(foodItem, category, completedTests);
                                 long maxPossibleScore = foodItemTestCount * 5;
 
                                 <div class="row">

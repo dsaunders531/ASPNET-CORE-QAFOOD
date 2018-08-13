@@ -9,3 +9,8 @@
 /.vs
 /mezzanine.essentials/obj
 /QAFood/obj
+/QAFood.BLL/bin/Debug/netcoreapp2.1
+/QAFood.BLL/obj
+/QAFood.DAL/bin/Debug/netcoreapp2.1
+/QAFood.DAL/obj
+/QAFood.XUnitTests/obj
