@@ -11,8 +11,12 @@ $body-font-color: black;
 
 $body-font-color-disabled: darkgrey;
 
-$header-background: lightskyblue;
+$header-background: lightblue;
 $header-font-color: $body-font-color;
+$header-font-color-desktop: white;
+
+$content-background: white;
+$content-font-color: $body-font-color;
 
 $footer-background: $header-background;
 $footer-font-color: $body-font-color;

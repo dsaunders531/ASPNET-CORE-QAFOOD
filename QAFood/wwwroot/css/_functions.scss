@@ -27,3 +27,18 @@
 @mixin box-glow($blur, $color) {
     box-shadow: 0px 4px 12px $blur $color, 4px 0px 12px $blur $color;
 }
+
+@mixin opacity($color, $value)
+{
+    $alpha-value: $value * 100;
+
+    background-color: $color;
+    opacity: $value;
+    /* IE8 and earlier */
+    filter: Alpha(opacity=$alpha-value);
+}
+
+@mixin text-shadow()
+{
+    text-shadow: 2px, 2px, 7px, black;
+}

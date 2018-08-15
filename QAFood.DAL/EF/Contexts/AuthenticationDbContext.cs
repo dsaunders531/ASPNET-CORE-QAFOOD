@@ -12,7 +12,7 @@ namespace QAFood.DAL
     /// <summary>
     /// The authentication db context.
     /// </summary>
-    public sealed class AuthenticationDbContext : IdentityDbContext<UserProfileModel>
+    public class AuthenticationDbContext : IdentityDbContext<UserProfileModel>
     {
         public AuthenticationDbContext(DbContextOptions<AuthenticationDbContext> options) : base(options)
         {

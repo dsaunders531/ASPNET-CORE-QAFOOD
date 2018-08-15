@@ -10,7 +10,7 @@ namespace QAFood.DAL
     /// <summary>
     /// The database for the application.
     /// </summary>
-    public sealed class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 

@@ -27,6 +27,13 @@ namespace QAFood.BLL.ViewModels.Authentication
         public string Password { get; set; }
 
         [NotMapped]
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Please enter your password again")]
+        [Compare("Password", ErrorMessage = "The passwords do not match")]
+        public string Password2 { get; set; }
+
+        [NotMapped]
         public string ReturnUrl { get; set; }
     }
 }

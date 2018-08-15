@@ -11,6 +11,19 @@ function foodItemSelect_Change(foodItemSelect) {
     HideSaved();
     ShowWorking();
 
+    var imageClass = "foodImage" + selectedId;
+    var imageEles = document.getElementsByClassName("foodImage");
+    for (var i = 0; i < imageEles.length; i++) {
+        if ($(imageEles[i]).hasClass(imageClass) == true) {
+            if ($(imageEles[i]).hasClass("hidden") == true) {
+                $(imageEles[i]).removeClass("hidden");
+            }
+        }
+        else if ($(imageEles[i]).hasClass("hidden") == false) {
+            $(imageEles[i]).addClass("hidden");
+        }
+    }
+
     $.ajax(
         {
             type: 'GET',

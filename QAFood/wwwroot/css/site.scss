@@ -164,37 +164,153 @@ div .btn-group {
 // No media query since this is the default in Bootstrap
 
 // Small devices (landscape phones, 576px and up)
-@media (min-width: 576px) {
-
+@media (min-width: 576px) 
+{
     nav .navbar-header h1 {
         margin-top: 12px;
         font-size: 24px;
     }
 }
 
-// Medium devices (tablets, 768px and up)
-@media (min-width: 768px) {
+header .background-image {
+    background-image: url("../images/QA-Food_header.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
 
+#foodItemCarousel div .image0 
+{
+    min-height: 400px;
+    height: 400px;
+    background-image: url("../images/products/banana-custard.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+
+#foodItemCarousel div .image1 {
+    min-height: 400px;
+    height: 400px;
+    background-image: url("../images/products/Dried-Mushrooms.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+
+#foodItemCarousel div .image2 {
+    min-height: 400px;
+    height: 400px;
+    background-image: url("../images/products/ice-cream.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+
+#foodItemCarousel div .image3 {
+    min-height: 400px;
+    height: 400px;
+    background-image: url("../images/products/smelly-cheese.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.foodImage {
+    min-height: 300px;
+    height: 300px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border: 1px solid $nav-background;
+    @include border-radius(4px);
+    @include box-shadow(4px, 4px, 6px);
+}
+
+.foodImage1 {
+    background-image: url("../images/products/1.jpg");
+}
+
+.foodImage2 {
+    background-image: url("../images/products/2.jpg");
+}
+
+.foodImage3 {
+    background-image: url("../images/products/3.jpg");
+}
+
+.foodImage4 {
+    background-image: url("../images/products/4.jpg");
+}
+
+.foodImage5 {
+    background-image: url("../images/products/5.jpg");
+}
+
+.foodImage6 {
+    background-image: url("../images/products/6.jpg");
+}
+
+.foodImage7 {
+    background-image: url("../images/products/7.jpg");
+}
+
+.foodImage8 {
+    background-image: url("../images/products/8.jpg");
+}
+
+.carousel-font-color {
+    color: $body-background;
+}
+
+.carousel-font-color-inverse {
+    color: $body-font-color;
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) 
+{
     .header {
         visibility: initial;
+        min-height: 175px;
         max-height: initial;
-        background-color: $header-background;
         color: $header-font-color;
+        background-color: $header-background;
+    }
+
+    header .container-fluid {
+        min-height: 175px;
+        max-height: inherit;
+    }
+
+    header .background-image {
+        background-image: url("../images/QA-Food_header.png");
+        background-repeat: no-repeat;
+        background-position:center;
+        background-size: cover;        
     }
 
     header h1 {
         float: right;
-        font-size: 30px;
+        font-size: 65px;
+        color: $header-font-color-desktop;
+        margin-top: 75px;
+        @include text-shadow();
     }
 
     header img {
-        height: 60px;
-        width: 94px;
-        margin-top: 8px;
+        height: 120px;
+        width: 188px;
+        margin-top: 21px;
         margin-bottom: 12px;
+        margin-left: 18px;
     }
 
-    nav .navbar-header h1, nav .navbar-header img {
+    nav .navbar-header h1, 
+    nav .navbar-header img {
         visibility: hidden;
         max-height: 0px;
         max-width: 0px;
@@ -217,13 +333,16 @@ div .btn-group {
         @include border-radius(0px);
     }
 
-    nav, .navbar-custom, .navbar-toggle, .dropdown-menu {
+    nav, .navbar-custom, 
+    .navbar-toggle, .dropdown-menu {
         background-color: $nav-background;
         color: $nav-font-color;
     }
 
     .navbar {
-        color: $nav-background;        
+        color: $nav-background;
+        border-bottom: 5px solid $header-background;
+        @include box-shadow(0px, 0px, 5px);
     }
 
     nav .icon-bar {
@@ -269,6 +388,11 @@ div .btn-group {
 
     content .container {
         margin-bottom: 55px;
+        background-color: $content-background;
+        color: $content-font-color;
+        border: 2px solid $header-background;
+        @include border-radius(4px);
+        @include box-shadow(2px, 2px, 2px);
     }
 
     .footer {
@@ -289,11 +413,6 @@ div .btn-group {
         padding-left: 30px;
         padding-right: initial;
     }
-
-    div .btn-group {
-        float: initial;
-    }
-
 }
 
 // Large devices (desktops, 992px and up)
