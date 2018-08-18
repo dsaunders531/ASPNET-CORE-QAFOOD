@@ -13,6 +13,11 @@
     <AssemblyName>QA Food</AssemblyName>
     <AssemblyVersion>1.0.1.0</AssemblyVersion>
     <FileVersion>1.0.1.0</FileVersion>
+    <UserSecretsId>1776b42e-6194-46ee-8b2f-9734cd87df7a</UserSecretsId>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile></DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -35,6 +40,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Areas\api\Views\_ViewImports.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\api\Views\_ViewStart.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Legal\GDPR.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

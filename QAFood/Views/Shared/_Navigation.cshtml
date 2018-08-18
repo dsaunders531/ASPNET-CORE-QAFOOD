@@ -5,7 +5,7 @@
 <nav class="navbar navbar-custom">
     <div class="container">
         <div class="navbar-header">
-            <a asp-controller="Home" asp-action="Index">
+            <a asp-area="" asp-controller="Home" asp-action="Index">
                 <img src="~/images/AppLogoSmall.png" />
             </a>
             <h1>@this.AppInfo.Product</h1>
@@ -32,29 +32,29 @@
         Only 1 level of dropdown menu is supported.
                 *@
                 <li id="nav_home_index">
-                    <a asp-controller="Home" asp-action="Index">
+                    <a asp-area="" asp-controller="Home" asp-action="Index">
                         <i class="fa fa-home"></i> Home
                     </a>
                 </li>
                 <li id="nav_home_contact">
-                    <a asp-controller="Home" asp-action="Contact">Contact</a>
+                    <a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
                 </li>
                 <li id="nav_home_about">
-                    <a asp-controller="Home" asp-action="About">About</a>
+                    <a asp-area=""asp-controller="Home" asp-action="About">About</a>
                 </li>
 
                 @if (User.Identity.IsAuthenticated == true)
                 {
                     <li id="nav_review_index">
-                        <a asp-controller="Review" asp-action="Index">Review a food parcel</a>
+                        <a asp-area="" asp-controller="Review" asp-action="Index">Review a food parcel</a>
                     </li>
                     @if (User.IsInRole("Admins"))
                     {
-                        <li id="nav_testresults_index" class="dropdown">
+                        <li id="nav_testresult_index" class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Test Results <span class="fa fa-caret-down"></span></a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a asp-controller="TestResult" asp-action="Index">View Test Results</a>
+                                    <a asp-area="" asp-controller="TestResult" asp-action="Index">View Test Results</a>
                                 </li>                                
                             </ul>
                         </li>
@@ -64,12 +64,12 @@
             <ul class="nav navbar-nav navbar-right">
                 @if (User.Identity.IsAuthenticated == false)
                 {
-                    <li id="nav_account_login"><a asp-controller="Account" asp-action="Login"><i class="fa fa-user"></i> Login</a></li>
-                    <li id="nav_account_createaccount"><a asp-controller="Account" asp-action="CreateAccount"><i class="fa fa-user-plus"></i> Register</a></li>
+                    <li id="nav_account_login"><a asp-area="" asp-controller="Account" asp-action="Login"><i class="fa fa-user"></i> Login</a></li>
+                    <li id="nav_account_createaccount"><a asp-area="" asp-controller="Account" asp-action="CreateAccount"><i class="fa fa-user-plus"></i> Register</a></li>
                 }
                 else
                 {
-                    <li id="nav_account_logout"><a asp-controller="Account" asp-action="Logout"><i class="fa fa-lock"> </i> Hi @User.Identity.Name, Logout</a></li>
+                    <li id="nav_account_logout"><a asp-area="" asp-controller="Account" asp-action="Logout"><i class="fa fa-lock"> </i> Hi @User.Identity.Name, Logout</a></li>
                 }
             </ul>
         </div>

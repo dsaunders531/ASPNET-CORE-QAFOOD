@@ -6,7 +6,7 @@
     "inputFiles": [
       "wwwroot/js/site.js",
       "wwwroot/js/navbar.js",
-      "wwwroot/js/cookieMessage.js"
+      "wwwroot/js/cookieManager.js"
     ],
     // Optionally specify minification options
     "minify": {

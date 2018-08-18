@@ -1,119 +1,152 @@
-﻿/* Detect which navbar element is active */
-$(document).ready(Nav_DetectActive());
-$(document).resize(Nav_DetectActive());
-$(window).resize(Nav_DetectActive());
+﻿/* Detect which navbar element is active 
+ * 
+ * All navbar element ids need to follow a naming convention 'nav_controllername_actionname'.
+ * The top level of a dropdown needs to be called 'nav_controllername_index' so it is made active when a submenu item is selected.
+ * There must be one 'nav_home_index' which is the default if the id cannot be found.
+ * 
+ * The navbar id to make active is derived from the route (url). If you are using custom routes, you must change the nav 
+ * element id so the controller name and action name is the same as the route.
+ * 
+ * eg: www.example.com/Home/Contact = 'nav_home_contact'
+ *      www.example.com/Home = 'nav_home_index'
+ *      www.example.com = 'nav_home_index'
+ *      www.example.com/Products/Page/2 = 'nav_products_page'
+ *      www.example.com/Products/?Page=2 = 'nav_products_index'
+ * 
+ * If the element id cannot be found, it is changed to 'nav_controllername_index' and if this cannot be found 'nav_home_index' is made active as the default.
+ */
 
-$(document).scroll(
-    function Nav_stayOnTop() {
-        // to prevent crazy loop, the size of the window must be taken into account.
-        if (window.innerWidth >= 768) {
-            var headerEle = document.getElementsByClassName("header");
-            var headerHeight = headerEle[0].getBoundingClientRect().height;
+$(document).ready(nav_ConfigureEvents());
 
-            if (window.scrollY > headerHeight) {
-                var navEle = document.getElementsByClassName("nav");
-                var navHeight = navEle[0].getBoundingClientRect().height + 18;
+/* Set the events to respond to.
+ * 
+ * The active nav entry needs to be set on resize. 
+ * When moving between bootstrap screen sizes, the nav style changes so the active entry may need to be reset.
+ * 
+ * Force the navbar to remain on the top of the page after a scroll. 
+ */
+function nav_ConfigureEvents() {
+    document.addEventListener("scroll", function () { nav_StayOnTop(); });
+    window.addEventListener("resize", function () { nav_DetectActive(); });
 
-                $("header").attr("style", "margin-top: " + navHeight + "px; visibility: hidden;");
-                $("nav").addClass("navbar-fixed-top");
-            }
-            else {
-                if ($("nav").hasClass("navbar-fixed-top")) {
-                    $("header").attr("style", "");
-                    $("nav").removeClass("navbar-fixed-top");
-                }
+    nav_DetectActive();
+}
+
+
+function nav_StayOnTop() {
+    // to prevent crazy loop, the size of the window must be taken into account.
+    if (window.innerWidth >= 768) {
+        var eleHeader = $("header")[0];
+        var eleNav = $("nav")[0];
+
+        var pxHeaderHeight = eleHeader.getBoundingClientRect().height;
+
+        if (window.scrollY > pxHeaderHeight) {
+            var pxNavHeight = eleNav.getBoundingClientRect().height + 18;
+
+            $("header").attr("style", "margin-top: " + pxNavHeight + "px; visibility: hidden;");
+            $("nav").addClass("navbar-fixed-top");
+        }
+        else {
+            if ($("nav").hasClass("navbar-fixed-top")) {
+                $("header").attr("style", "");
+                $("nav").removeClass("navbar-fixed-top");
             }
         }
     }
-);
-
-// fix issue on dropdown
-
-// Set the active class and screen reader text.
-function Nav_DetectActive() {
-    var thisPath = window.location.pathname;
-
-    // Find the controller and action from the url parts (assuming the pattern is: scheme host controller action)
-    thisPath = thisPath.replace(/#/i, "");
-    var thisPaths = thisPath.split("/");
-    var controllerName = "home";
-    var actionName = "index";
-
-    if (thisPaths.length >= 2) {
-        controllerName = thisPaths[1];
-    }
-
-    if (thisPaths.length >= 3) {
-        actionName = thisPaths[2];        
-    }
-
-    if (controllerName == undefined) {
-        controllerName = "home";
-    }
-    else if(controllerName.length == 0) {
-        controllerName = "home";
-    }
-
-    if (actionName == undefined) {
-        actionName = "index";
-    }
-    else if (actionName.length == 0) {
-        actionName = "index";
-    }
-
-    this.Nav_SetActive(this.BuildNavId(controllerName, actionName));
 }
 
-function Nav_SetActive(elementId) {
-    elementId = elementId.toLowerCase();
+// Set the active class and screen reader text.
+function nav_DetectActive() {
+    var strRoute = window.location.pathname;
+    strRoute = strRoute.replace(/#/i, "");
+
+    // Find the controller and action from the url parts (assuming the pattern is: scheme host controller action)    
+    var strsRoutePart = strRoute.split("/");
+    var strControllerName = "home";
+    var strActionName = "index";
+
+    if (strsRoutePart.length >= 2) {
+        strControllerName = strsRoutePart[1];
+    }
+
+    if (strsRoutePart.length >= 3) {
+        strActionName = strsRoutePart[2];        
+    }
+
+    if (strControllerName == undefined) {
+        strControllerName = "home";
+    }
+    else if(strControllerName.length == 0) {
+        strControllerName = "home";
+    }
+
+    if (strActionName == undefined) {
+        strActionName = "index";
+    }
+    else if (strActionName.length == 0) {
+        strActionName = "index";
+    }
+
+    var strActiveNavId = this.BuildNavId(strControllerName, strActionName);
+
+    this.nav_SetActive(strActiveNavId);
+}
+
+// Set the active state on the specified element id.
+function nav_SetActive(strNavActiveEleId) {
+    strNavActiveEleId = strNavActiveEleId.toLowerCase();
     
-    var splitName = elementId.split("_");
-    var parentElementId = this.BuildNavId(splitName[1], "index");
+    var strsNavActiveEleId = strNavActiveEleId.split("_");
+
+    // Find the parent id incase a child item is selected. 
+    // When there are dropdown menus and the screen is desktop or greater, the top item needs to be made active.
+    var strNavParentId = this.BuildNavId(strsNavActiveEleId[1], "index");
 
     // Remove the current active
     $("#navbar li.active a:has(span)").remove(".sr-only");
     $("#navbar li.active").removeClass("active");
 
-    // Need to strip out leading # jQuery needs it but standard JS does not.
-    if (elementId.charAt(0) == "#") {
-        elementId.replace(/#/i, "");
+    // Need to strip out leading #. jQuery needs it but standard JS does not.
+    if (strNavActiveEleId.charAt(0) == "#") {
+        strNavActiveEleId.replace(/#/i, "");
     }
 
     // Larger screens with horizontal menu
-    if (document.getElementById(parentElementId) != null) {
+    if (document.getElementById(strNavParentId) != null) {
         if (window.innerWidth >= 768) {
             // Select the parent item on larger screens (Horizontal menu).
-            if ($("#" + parentElementId).hasClass("dropdown")) {
-                elementId = parentElementId;
+            if ($("#" + strNavParentId).hasClass("dropdown")) {
+                strNavActiveEleId = strNavParentId;
             }
         }
         else {
             // smaller screens with vertical menu
             // set the item as active and open all its parent.
-            if ($("#" + parentElementId).hasClass("dropdown")) {
-                $("#" + parentElementId).addClass("open");
+            if ($("#" + strNavParentId).hasClass("dropdown")) {
+                $("#" + strNavParentId).addClass("open");
             }
         }
     }
     
     // See if the target element exists
-    if (document.getElementById(elementId) == null) {       
-        elementId = this.BuildNavId(splitName[1], "index");
+    if (document.getElementById(strNavActiveEleId) == null) {       
+        strNavActiveEleId = this.BuildNavId(strsNavActiveEleId[1], "index");
 
-        if (document.getElementById(elementId) == null ) {
+        if (document.getElementById(strNavActiveEleId) == null ) {
             // fallback value
-            elementId = this.BuildNavId("home", "index");
+            strNavActiveEleId = this.BuildNavId("home", "index");
         }
     }
 
-    if (document.getElementById(elementId) != null) {
-        $("#" + elementId).addClass("active");
-        $("#" + elementId + " li.active a").add("<span class='sr-only'> (current)</span>");
+    if (document.getElementById(strNavActiveEleId) != null) {
+        $("#" + strNavActiveEleId).addClass("active");
+        $("#" + strNavActiveEleId + " li.active a").add("<span class='sr-only'> (current)</span>");
     }
 }
 
 function BuildNavId(controllerName, actionName) {
-    var result = "nav_" + controllerName + "_" + actionName;
-    result = result.toLowerCase();
-    return result;
+    var strResult = "nav_" + controllerName + "_" + actionName;
+    strResult = strResult.toLowerCase();
+    return strResult;
 }

@@ -2,15 +2,10 @@
 using mezzanine.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using QAFood.BLL.Workers;
-using QAFood.DAL;
 using QAFood.DAL.Models;
-using QAFood.BLL;
 
 namespace QAFood
 {
@@ -40,11 +35,11 @@ namespace QAFood
             services.AddSession();
             services.AddLocalization();
             services.AddAntiforgery();
-
+            
             // Business logic services - this also configures the database services & Identity services
             QAFood.BLL.Startup.ConfigureServices(this.AppConfiguration, services, this.Environment);
 
-            services.AddMvc();
+            services.AddMvc(); //.AddMvcOptions(opts => { opts.RespectBrowserAcceptHeader = true; opts.ReturnHttpNotAcceptable = true; });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -72,8 +67,11 @@ namespace QAFood
             app.UseStaticFiles();
             app.UseSession();
 
+            // Note: using a seperate area for the api
             app.UseMvc(routes =>
             {
+                routes.MapRoute(name: "areas", template: "{area:exists}/{controller=Home}/{action=Index}");
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");

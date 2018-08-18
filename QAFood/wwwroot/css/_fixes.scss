@@ -13,6 +13,14 @@
     padding-bottom: 14px;
 }
 
+.busy-cursor {
+    cursor: progress;
+}
+
+.wait-cursor {
+    cursor: wait;
+}
+
 i .fa .show-disabled,
 div .show-disabled,
 .show-disabled {

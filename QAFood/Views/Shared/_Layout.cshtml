@@ -39,7 +39,7 @@
 
     <header class="header">
         <div class="container-fluid background-image">
-            <a asp-controller="Home" asp-action="Index">
+            <a asp-area="" asp-controller="Home" asp-action="Index">
                 <img class="" src="~/images/AppLogo-inverse.png" />
             </a>
 
@@ -63,32 +63,31 @@
                         &copy; @this.AppInfo.Company @DateTime.Now.Year.ToString(this.UserCulture)
                     </li>
                     <li>
-                        <span>| </span><a class="" asp-controller="Home" asp-action="Contact">Contact</a>
+                        <span>| </span><a class="" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
                     </li>
                     <li>
-                        <span>| </span><a class="" asp-controller="Home" asp-action="About">About</a>
+                        <span>| </span><a class="" asp-area="" asp-controller="Home" asp-action="About">About</a>
                     </li>
                     <li>
-                        <span>| </span><a class="" asp-controller="Legal" asp-action="Cookies">Cookie Policy</a>
+                        <span>| </span><a class="" asp-area="" asp-controller="Legal" asp-action="Cookies">Cookie Policy</a>
                     </li>
                     <li>
-                        <span>| </span><a class="" asp-controller="Legal" asp-action="GDPR">GDPR</a>
+                        <span>| </span><a class="" asp-area="" asp-controller="Legal" asp-action="GDPR">GDPR</a>
                     </li>
                 </ul>
             </div>
         </div>
     </footer>
 
-    <div id="cookieMessage" class="modal fade" role="dialog" tabindex="-1">
+    <div id="cookieMessage" class="modal fade" role="dialog" tabindex="-1" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-header">
                 <h2>This site uses cookies to provide you with services.</h2>
             </div>
             <div class="modal-body">
                 <p>By clicking on the button, you agree for this site to save cookies.</p>
-                <button id="cookieMessage" class="btn btn-primary" type="button" data-dismiss="modal" onclick="cookieMessage_click()">OK - save cookies.</button>
-                <br />
-                <p>You can review our cookie and data protection policy at any time by clicking on the links at the bottom of the page.</p>
+                <button id="cookieMessage" class="btn btn-primary" type="button" data-dismiss="modal" onclick="cookieMessage_click()">OK - save cookies.</button>               
+                <p class="more-padding-top">You can review our cookie and data protection policy at any time by clicking on the links at the bottom of the page.</p>
             </div>
         </div>
     </div>
@@ -98,7 +97,7 @@
         <script src="~/lib/jquery/3.3.1/jquery-3.3.1.min.js"></script>
         <script src="~/lib/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="~/js/navbar.js"></script>
-        <script src="~/js/cookieMessage.js"></script>
+        <script src="~/js/cookieManager.js"></script>
         <script src="~/js/site.js"></script>
     </environment>
     <environment exclude="Development">

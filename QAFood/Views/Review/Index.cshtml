@@ -44,7 +44,7 @@ else
             </div>
             <div class="panel-footer">
                 @* Add parcelid to the route to start review *@
-                <a asp-controller="Review" asp-action="ReviewStart" asp-route-parcelId="@item.Id"><i class="fa fa-check"> </i> Review this parcel.</a>
+                <a asp-area="" asp-controller="Review" asp-action="ReviewStart" asp-route-parcelId="@item.Id"><i class="fa fa-check"> </i> Review this parcel.</a>
             </div>
         </div>
     }

@@ -1,4 +1,14 @@
-﻿// Get the test result when the document loads.
+﻿/*
+ * Ajax functions for the ReviewStart page.
+ * 
+ * The getting and saving of data is all made on one page using the api.
+ * 
+ */
+
+var CursorTimer;
+var BusyTimer;
+
+// Get the test result when the document loads.
 $(document).ready(foodItemSelect_Change(document.getElementById("SelectedFoodItemId")));
 
 // Get the data for the selected item.
@@ -6,11 +16,12 @@ function foodItemSelect_Change(foodItemSelect) {
     var selectedId = foodItemSelect.value;
     var foodParcelId = document.getElementsByName("FoodParcelId")[0].value;
     var testId = document.getElementsByName("TestId")[0].value;
-    var apiUrl = "/api/TestResultItem/" + foodParcelId + "/" + selectedId + "/" + testId;
+    var jsonBody = JSON.stringify({ FoodParcelId: foodParcelId, SelectedFoodItemId: selectedId, TestId: testId });
 
     HideSaved();
     ShowWorking();
 
+    // Show the food image for the item.
     var imageClass = "foodImage" + selectedId;
     var imageEles = document.getElementsByClassName("foodImage");
     for (var i = 0; i < imageEles.length; i++) {
@@ -24,45 +35,132 @@ function foodItemSelect_Change(foodItemSelect) {
         }
     }
 
-    $.ajax(
-        {
-            type: 'GET',
-            url: apiUrl,
-            error: function (textStatus) { ShowErrorResult(textStatus); },
-            success: function (data) { ShowResult(data); }
-        }
-    );
+    // Get the data for the item.
+    $.ajax({
+        url: '/api/TestResultItem/',
+        type: 'POST',
+        data: jsonBody,
+        dataType: 'json',
+        contentType: 'application/json; charset=UTF-8',
+        success: function (data, textStatus, jqXHR) { ShowResult(data); },
+        error: function (jqXHR, textStatus, errorThrown) { ShowErrorResult(jqXHR, textStatus, errorThrown); }
+    });
 }
 
 // Set the form controls to disabled and show a spinner
 function ShowWorking() {
-    $(document).addClass("disabled");
-    document.getElementById("working").opacity = 0;
-    $(document.getElementById("working")).removeClass("hidden");
-    $(document.getElementById("working")).animate({ opacity: '1' }, "slow");
+    if ($("#btnSubmit").hasClass("disabled") == false) {
+        $("#btnSubmit").addClass("disabled");
+    }
+
+    if ($("#btnReset").hasClass("disabled") == false) {
+        $("#btnReset").addClass("disabled");
+    }
+
+    // disable the form controls
+    if ($("#SelectedFoodItemId").hasClass("disabled") == false) {
+        $("#SelectedFoodItemId").addClass("disabled");
+        document.getElementById("SelectedFoodItemId").disabled = "disabled";
+    }
+
+    // all the option buttons
+    var optionEles = $("form input");
+    for (var i = 0; i < optionEles.length; i++) {
+        var optionEle = optionEles[i];
+
+        if (optionEle.disabled == "" || optionEle.disabled == false) {
+            optionEle.disabled = "disabled";
+        }
+    }
+
+    // When the process takes a while show the busy cursor first then a message or other visual indicator.
+    // The timings are the recommended intervals 1 second and 3 seconds.
+    CursorTimer = window.setTimeout(function () { timer_ShowBusyCursor(); }, 1000);    
 }
 
 // Set the form controls to enabled and hide the spinner
-function HideWorking() {
-    $(document).removeClass("disabled");
-    $(document.getElementById("working")).animate({ opacity: '0' }, "slow");
-    $(document.getElementById("working")).addClass("hidden");
+function HideWorking() {    
+    // enable the form controls
+    // disable the form controls
+    if ($("#SelectedFoodItemId").hasClass("disabled")) {
+        $("#SelectedFoodItemId").removeClass("disabled");
+        document.getElementById("SelectedFoodItemId").disabled = "";
+    }
+
+    // all the option buttons
+    var optionEles = $("form input");
+    for (var i = 0; i < optionEles.length; i++) {
+        var optionEle = optionEles[i];
+
+        if (optionEle.disabled == "disabled" || optionEle.disabled == true) {
+            optionEle.disabled = "";
+        }
+    }
+
+    if ($("#btnSubmit").hasClass("disabled")) {
+        $("#btnSubmit").removeClass("disabled");
+    }
+
+    if ($("#btnReset").hasClass("disabled")) {
+        $("#btnReset").removeClass("disabled");
+    }
+
+    // Stop the timers.
+    window.clearTimeout(CursorTimer);
+    window.clearTimeout(BusyTimer);    
+
+    // Get the document back to its original state.
+    timer_Ended();
+}
+
+function timer_ShowBusyCursor() {
+    if ($("body").hasClass("busy-cursor") == false) {
+        $("body").addClass("busy-cursor");
+    }   
+
+    // Show the busy timer a few seconds from now.
+    BusyTimer = window.setTimeout(function () { timer_ShowBusyMessage(); }, 2000);
+}
+
+function timer_ShowBusyMessage() {
+    if ($("body").hasClass("busy-cursor")) {
+        $("body").removeClass("busy-cursor");
+    }    
+    $("body").addClass("wait-cursor");
+    $("#btnWorking").opacity = 0;
+    $("#btnWorking").removeClass("hidden");
+    $("#btnWorking").animate({ opacity: '1' }, "slow");
+}
+
+function timer_Ended() {
+    if ($("body").hasClass("busy-cursor")) {
+        $("body").removeClass("busy-cursor");
+    }    
+
+    if ($("body").hasClass("wait-cursor")) {
+        $("body").removeClass("wait-cursor");
+    }    
+
+    if ($("#btnWorking").hasClass("hidden") == false ) {
+        $("#btnWorking").animate({ opacity: '0' }, "slow");
+        $("#btnWorking").addClass("hidden");
+    }    
 }
 
 function ShowSaved() {
-    document.getElementById("saved").opacity = 0;
-    $(document.getElementById("saved")).removeClass("hidden");
-    $(document.getElementById("saved")).animate({ opacity: '1' }, "slow");
+    $("#alertSaved").opacity = 0;
+    $("#alertSaved").removeClass("hidden");
+    $("#alertSaved").animate({ opacity: '1' }, "slow");
 }
 
 function HideSaved() {
-    $(document.getElementById("saved")).animate({ opacity: '0' }, "slow");
-    $(document.getElementById("saved")).addClass("hidden");
+    $("#alertSaved").animate({ opacity: '0' }, "slow");
+    $("#alertSaved").addClass("hidden");
 }
 
-function ShowErrorResult(textStatus) {
-    alert("Something went wrong using the api. " + textStatus);
+function ShowErrorResult(jqXHR, textStatus, errorThrown) {
     HideWorking();
+    alert(jqXHR.statusText + ". Something went wrong using the api. " + textStatus + " " + errorThrown);
 }
 
 // Display the results of the ajax query.
@@ -72,6 +170,7 @@ function ShowResult(data) {
     var eleName;
 
     // find the element to change. There is a lot of junk in the returned data as it is used for other things.
+    // its easier than using data.presentationValue and having repeated loops for these input options.
     $.each(data,
         function (key, item) {
             switch (key) {
@@ -101,26 +200,10 @@ function ShowResult(data) {
                     ele = document.getElementById(eleName + i);
 
                     if (i == item || (item == 0 && i == 5)) {
-                        ele.disabled = "";
                         ele.checked = "checked";
-                    }
-                    else {
-                        ele.disabled = "";
+                        break;
                     }
                 }
-            }
-
-            // remove the css which sets the items as disabled.
-            var disabledEles = document.getElementsByClassName("show-disabled");
-
-            for (var i = 0; i < disabledEles.length; i++) {
-                $(disabledEles[i]).removeClass("show-disabled");
-            }
-
-            disabledEles = document.getElementsByClassName("disabled");
-
-            for (var i = 0; i < disabledEles.length; i++) {
-                $(disabledEles[i]).removeClass("disabled");
             }
         }
     );
@@ -129,7 +212,12 @@ function ShowResult(data) {
 }
 
 // Save the data via the api.
-function Submit_click() {
+function btnSubmit_Click() {
+    if ($("#btnSubmit").hasClass("disabled")) {
+        // do nothing
+        return;
+    }
+
     ShowWorking();
 
     // get the values
@@ -142,18 +230,31 @@ function Submit_click() {
     var aromaValue = GetOptionValue("aromaValue");
     var flavourValue = GetOptionValue("flavourValue");
 
-    var apiUrl = "/api/TestResultItem/" + foodParcelId + "/" + selectedId + "/" + testId
-        + "/?presentationValue=" + presentationValue + "&textureValue=" + textureValue + "&aromaValue=" + aromaValue + "&flavourValue=" + flavourValue;
+    var jsonBody = JSON.stringify({
+        FoodParcelId: foodParcelId, SelectedFoodItemId: selectedId, TestId: testId,
+        PresentationValue: presentationValue, TextureValue: textureValue,
+        AromaValue: aromaValue, FlavourValue: flavourValue
+        });
 
-    // send to api
-    $.ajax(
-        {
-            type: 'PATCH',
-            url: apiUrl,
-            error: function (textStatus) { ShowErrorResult(textStatus); },
-            success: function (data) { SubmitResult(data); }
-        }
-    );
+    $.ajax({
+        url: '/api/TestResultItem/',
+        type: 'PATCH',
+        data: jsonBody,
+        dataType: 'json',
+        contentType: 'application/json; charset=UTF-8',
+        success: function (data, textStatus, jqXHR) { SubmitResult(); },
+        error: function (jqXHR, textStatus, errorThrown) { ShowErrorResult(jqXHR, textStatus, errorThrown); }
+    });
+}
+
+function btnReset_Click() {
+    if ($("#btnReset").hasClass("disabled")) {
+        // do nothing
+        return;
+    }
+
+    // get the original values from the database
+    foodItemSelect_Change(document.getElementById("SelectedFoodItemId"));
 }
 
 // get the selected value from an option.
@@ -175,7 +276,7 @@ function GetOptionValue(idName) {
 }
 
 // Show a thanks message to the user.
-function SubmitResult(data) {
+function SubmitResult() {
     ShowSaved();
     HideWorking();
 }
