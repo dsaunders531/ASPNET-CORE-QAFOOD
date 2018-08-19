@@ -13,8 +13,11 @@ namespace QAFood
         public ViewModelBase()
         {
             this.PageMeta = new PageMetaModel();
+            this.Pagination = null; // The default is null (no pagination)
         }
 
         public IPageMeta PageMeta { get; set; }
+
+        public IPagination Pagination { get; set; }
     }
 }

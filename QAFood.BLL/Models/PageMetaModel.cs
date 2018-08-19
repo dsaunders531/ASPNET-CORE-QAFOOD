@@ -7,7 +7,7 @@ namespace QAFood.BLL.Models
     /// The page meta model for defining the page meta tags using the meta tag helper.
     /// </summary>
     [NotMapped]
-    public class PageMetaModel : PageMeta
+    public sealed class PageMetaModel : PageMeta
     {
         public PageMetaModel()
         {

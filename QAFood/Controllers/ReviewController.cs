@@ -1,15 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using QAFood.BLL.Workers;
-using QAFood.DAL;
-using QAFood.DAL.Models;
-using QAFood.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using QAFood.BLL.ViewModels;
+using QAFood.BLL.Models;
 using QAFood.BLL.Services;
+using QAFood.BLL.ViewModels;
+using QAFood.DAL.Models;
 
 namespace QAFood.Controllers
 {
@@ -30,11 +24,22 @@ namespace QAFood.Controllers
         /// Get a list of all the food parcels which need a review.
         /// </summary>
         /// <returns></returns>
-        public IActionResult Index()
+        public IActionResult Index(int page = 1)
         {
+            // Using pagination for this view.
+            int itemsPerPage = 1; // the application default does not apply as there will be few food parcels to review.
+
+            // Get the paginated data
             FoodParcelsViewModel foodParcelsViewModel = new FoodParcelsViewModel()
             {
-                FoodParcels = this.ReviewService.GetFoodParcels()
+                FoodParcels = this.ReviewService.GetFoodParcelsPaginated((page -1) * itemsPerPage, itemsPerPage),     
+                Pagination = new PaginationModel()
+                            {
+                                CurrentPage = page,
+                                ItemsPerPage = itemsPerPage,
+                                ItemCount = this.ReviewService.GetFoodParcels().Count,
+                                PageAction = "Index"
+                            }
             };
 
             return View(foodParcelsViewModel);

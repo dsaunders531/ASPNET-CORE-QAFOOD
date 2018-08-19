@@ -8,5 +8,7 @@ namespace QAFood
     public interface IViewModel
     {        
         IPageMeta PageMeta { get; set; }
+
+        IPagination Pagination { get; set; }
     }    
 }

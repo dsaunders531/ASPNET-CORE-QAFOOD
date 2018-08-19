@@ -409,9 +409,14 @@ header .background-image {
         max-width: initial;
     }
 
-    .navbar-fixed-top {
-        padding-left: 30px;
-        padding-right: initial;
+    .navbar-fixed-top .navbar-nav {
+        padding-left: 15px;
+        padding-right: 0px;
+    }
+
+    .navbar-fixed-top .navbar-right {
+        padding-left: 0px;
+        margin-right: 0px;
     }
 }
 

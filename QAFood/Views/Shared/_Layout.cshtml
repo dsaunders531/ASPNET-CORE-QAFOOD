@@ -52,6 +52,7 @@
     <content class="content">
         <div class="container">
             @RenderBody()
+            @await Html.PartialAsync("_Pagination", Model.Pagination)
         </div>
     </content>
 
