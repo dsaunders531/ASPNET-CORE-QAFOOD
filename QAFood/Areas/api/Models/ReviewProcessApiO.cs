@@ -9,6 +9,13 @@ namespace QAFood.Areas.api.Models
     [NotMapped]
     public class ReviewProcessApiO
     {
+        /// <summary>
+        /// Create an instance of the ReviewProcessApiO
+        /// </summary>
+        /// <remarks>Api Objects need a parameterless constructor so they can be discovered.</remarks>
+        public ReviewProcessApiO()
+        { }
+
         [Required]
         public long FoodParcelId { get; set; }
 

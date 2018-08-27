@@ -1,10 +1,15 @@
 ﻿@model IViewModel
 
+@{ 
+    string userCultureName = this.ViewContext.HttpContext.Request.Culture().TwoLetterISOLanguageName.ToLower();
+    AssemblyInfo appInfo = new AssemblyInfo();
+}
+
 <!DOCTYPE html>
-<html lang="@this.UserLang.ToLower()" dir="@this.TextDirection">
+<html lang="@userCultureName" dir="@this.ViewContext.HttpContext.TextDirection()">
 <head>
     @* Use the meta tag helper to add the meta tags to the page *@
-    <meta meta-model="@Model.PageMeta" meta-user-culture-name="@this.UserLang.ToLower()"/>
+    <meta meta-model="@Model.PageMeta" meta-user-culture-name="@userCultureName"/>
     
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/3.3.7/css/bootstrap.min.css"  />
@@ -43,7 +48,7 @@
                 <img class="" src="~/images/AppLogo-inverse.png" />
             </a>
 
-            <h1>@this.AppInfo.Product</h1>
+            <h1>@appInfo.Product</h1>
         </div>
     </header>
 
@@ -61,7 +66,7 @@
             <div class="row">
                 <ul>
                     <li>
-                        &copy; @this.AppInfo.Company @DateTime.Now.Year.ToString(this.UserCulture)
+                        &copy; @appInfo.Company @DateTime.Now.Year.ToString(this.ViewContext.HttpContext.Request.Culture())
                     </li>
                     <li>
                         <span>| </span><a class="" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
@@ -74,6 +79,9 @@
                     </li>
                     <li>
                         <span>| </span><a class="" asp-area="" asp-controller="Legal" asp-action="GDPR">GDPR</a>
+                    </li>
+                    <li>
+                        <span>| </span><a class="" asp-area="api" asp-controller="Home" asp-action="Index">API</a>
                     </li>
                 </ul>
             </div>

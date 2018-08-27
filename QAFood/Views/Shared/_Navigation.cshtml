@@ -1,6 +1,9 @@
 ﻿@model IViewModel
-
 @* All the navbar details *@
+
+@{    
+    AssemblyInfo appInfo = new AssemblyInfo();
+}
 
 <nav class="navbar navbar-custom">
     <div class="container">
@@ -8,7 +11,7 @@
             <a asp-area="" asp-controller="Home" asp-action="Index">
                 <img src="~/images/AppLogoSmall.png" />
             </a>
-            <h1>@this.AppInfo.Product</h1>
+            <h1>@appInfo.Product</h1>
 
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                 <span class="sr-only">Toggle navigation</span>
@@ -21,15 +24,15 @@
         <div id="navbar" class="collapse navbar-collapse" aria-expanded="false">
             <ul class="nav navbar-nav">
                 @*
-        The ids must follow the pattern nav_{controller}_{action} in lower case.
-        otherwise they will not be selected by navbar.js
+                    The ids must follow the pattern nav_{controller}_{action} in lower case.
+                    otherwise they will not be selected by navbar.js
 
-        After adding new nav entries, update navbar.js with the appropriate values.
-        It should be fine with conventional controller action url patterns.
+                    After adding new nav entries, update navbar.js with the appropriate values.
+                    It should be fine with conventional controller action url patterns.
 
-        There must be an id nav_home_index. This is the fallback if the others cannot be found.
+                    There must be an id nav_home_index. This is the fallback if the others cannot be found.
 
-        Only 1 level of dropdown menu is supported.
+                    Only 1 level of dropdown menu is supported.
                 *@
                 <li id="nav_home_index">
                     <a asp-area="" asp-controller="Home" asp-action="Index">
@@ -40,7 +43,7 @@
                     <a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
                 </li>
                 <li id="nav_home_about">
-                    <a asp-area=""asp-controller="Home" asp-action="About">About</a>
+                    <a asp-area="" asp-controller="Home" asp-action="About">About</a>
                 </li>
 
                 @if (User.Identity.IsAuthenticated == true)
@@ -55,7 +58,7 @@
                             <ul class="dropdown-menu">
                                 <li>
                                     <a asp-area="" asp-controller="TestResult" asp-action="Index">View Test Results</a>
-                                </li>                                
+                                </li>
                             </ul>
                         </li>
                     }

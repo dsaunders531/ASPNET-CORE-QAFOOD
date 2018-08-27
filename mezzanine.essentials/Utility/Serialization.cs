@@ -155,6 +155,44 @@ namespace mezzanine.Utility
             return Serialize(type, o, new XmlRootAttribute(base.ObjectNameForXml(type)));
         }
 
+        /// <summary>
+        /// Convert document attributes to elements - required for clean deserialisation.
+        /// </summary>
+        /// <param name="xmlDocument"></param>
+        /// <returns></returns>
+        public XmlDocument DocumentAttrsToElements(XmlDocument xmlDocument)
+        {
+            this.AttributesToElements(xmlDocument.DocumentElement);
+
+            foreach (XmlElement item in xmlDocument.DocumentElement.ChildNodes)
+            {
+                this.AttributesToElements(item);
+            }
+
+            return xmlDocument;
+        }
+
+        /// <summary>
+        /// The serialiser ignores attributes so these need to be converted to elements.
+        /// </summary>
+        /// <param name="xmlElement"></param>
+        /// <returns></returns>
+        public XmlElement AttributesToElements(XmlElement xmlElement)
+        {
+            if (xmlElement.HasAttributes == true)
+            {
+                foreach (XmlAttribute attr in xmlElement.Attributes)
+                {
+                    XmlElement newEle = xmlElement.OwnerDocument.CreateElement(attr.Name);
+                    newEle.InnerText= attr.Value;
+                    xmlElement.AppendChild(newEle);                   
+                }
+
+                xmlElement.Attributes.RemoveAll();
+            }
+
+            return xmlElement;
+        }
     }
     
     /// <summary>

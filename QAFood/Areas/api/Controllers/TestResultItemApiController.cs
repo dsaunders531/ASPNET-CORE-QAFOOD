@@ -25,6 +25,7 @@ namespace QAFood.Areas.api.Controllers
         /// <summary>
         /// Create an instance of the TestResultItemApiController.
         /// </summary>
+        /// <param name="appConfigurationService"></param>
         /// <param name="reviewService"></param>
         public TestResultItemApiController(IAppConfigurationService appConfigurationService, ReviewService reviewService)
         {
@@ -119,6 +120,20 @@ namespace QAFood.Areas.api.Controllers
                 // return internal server error.
                 return StatusCode(500, e);
             }
+        }
+
+        /// <summary>
+        /// Just an example to test the api explorer. It has query parameters and a JSON body.
+        /// </summary>
+        /// <param name="number"></param>
+        /// <param name="text"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost("/Example/{number}")]
+        [ProducesResponseType(200)]
+        public ActionResult<ReviewProcessApiO> Example([FromBody] ReviewStartApiO model, [FromRoute] int number, [FromQuery] long othernumber, [FromQuery] string text = "test example")
+        {
+            return this.Post(model);
         }
     }
 }
